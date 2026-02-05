@@ -4,10 +4,11 @@ import {
   Environment,
   PerspectiveCamera,
 } from "@react-three/drei";
-import { Suspense, useState } from "react";
+import { Suspense, useState, useMemo } from "react";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { PaperLayer } from "./PaperLayer";
 import { Character } from "./Character";
+import { Star } from "./Star";
 import styles from "./PaperPortal.module.css";
 
 /**
@@ -16,6 +17,7 @@ import styles from "./PaperPortal.module.css";
  */
 export function PortalScene() {
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(false);
 
   // 파스텔 색상 팔레트
   const pastelColors = [
@@ -38,6 +40,28 @@ export function PortalScene() {
     scale: 1 - i * 0.05,
     rotation: 0, // 회전 제거로 그림자 깔끔하게
   }));
+
+  // 별 좌표와 속성 생성 (밤하늘 효과)
+  const starCount = 50;
+  const starData = useMemo(() => {
+    const arr = [];
+    for (let i = 0; i < starCount; i++) {
+      // 별은 중앙(0,0) 기준 반지름 2~5 내에 랜덤 배치 (별 구멍 안쪽)
+      const r = 2 + Math.random() * 3;
+      const theta = Math.random() * Math.PI * 2;
+      arr.push({
+        x: Math.cos(theta) * r,
+        y: Math.sin(theta) * r,
+        z: -15 + Math.random() * 5, // 구멍 영역 깊은 곳
+        size: 0.04 + Math.random() * 0.06,
+        color: Math.random() < 0.7 ? "#ffffff" : "#ffe6a0",
+        opacity: 0.6 + Math.random() * 0.4,
+        twinkleSpeed: 0.5 + Math.random() * 2, // 반짝임 속도 (0.5~2.5)
+        twinkleOffset: Math.random() * Math.PI * 2, // 시작 위상 랜덤
+      });
+    }
+    return arr;
+  }, []);
 
   return (
     <Canvas
@@ -109,6 +133,20 @@ export function PortalScene() {
       />
 
       <Suspense fallback={null}>
+        {/* 밤하늘 별들 - 한 번 클릭하면 계속 보이고 반짝임 */}
+        {hasBeenExpanded &&
+          starData.map((star, idx) => (
+            <Star
+              key={idx}
+              position={[star.x, star.y, star.z]}
+              size={star.size}
+              color={star.color}
+              baseOpacity={star.opacity}
+              twinkleSpeed={star.twinkleSpeed}
+              twinkleOffset={star.twinkleOffset}
+            />
+          ))}
+
         {layers.map((layer, index) => (
           <PaperLayer
             key={index}
@@ -118,7 +156,10 @@ export function PortalScene() {
             color={layer.color}
             scale={1} // 애니메이션 훅에서 조절되도록 1로 고정
             rotation={0}
-            onExpand={() => setIsExpanded(!isExpanded)}
+            onExpand={() => {
+              setIsExpanded(!isExpanded);
+              if (!hasBeenExpanded) setHasBeenExpanded(true);
+            }}
           />
         ))}
 

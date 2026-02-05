@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Container, Section, HeroMascot } from "../../shared";
+import { Container, Section } from "../../shared";
 import { PaperPortal } from "../PaperPortal";
 import styles from "./Hero.module.css";
 
@@ -9,12 +9,6 @@ import styles from "./Hero.module.css";
  */
 export function Hero() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [mascotJumpTrigger, setMascotJumpTrigger] = useState(0);
-
-  const handleCtaClick = () => {
-    setMascotJumpTrigger((prev) => prev + 1);
-    alert("YU Verse와 함께 새로운 발견을 시작합니다! 🚀");
-  };
 
   return (
     <Section
@@ -36,26 +30,15 @@ export function Hero() {
               platform. Leverage computational power to design better molecules
               faster.
             </p>
-            <button
-              type="button"
-              className={styles.heroCta}
-              onClick={handleCtaClick}
-            >
-              Get Started
-            </button>
           </div>
 
-          {/* 오른쪽: 3D 모델 (비주얼 요소이므로 스크린 리더에서 무시) */}
+          {/* 비주얼 요소이므로 스크린 리더에서 무시 */}
           <div className={styles.sceneContainer} aria-hidden="true">
-            {/* 기존 DigitalCloud - 주석 처리 */}
-            {/* <DigitalCloud /> */}
-            {/* Paper Portal - 일상의실천 스타일 */}
+            {/* Paper Portal  */}
             <PaperPortal />
           </div>
         </div>
       </Container>
-      {/* 마스코트: 섹션 기준 오른쪽 하단 고정 */}
-      <HeroMascot externalJumpTrigger={mascotJumpTrigger} />
     </Section>
   );
 }

@@ -3,6 +3,7 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import characterImage from "../../assets/yoonu-full.png";
+import characterBackImage from "../../assets/yoonu-back.png";
 
 interface CharacterProps {
   isExpanded: boolean;
@@ -15,6 +16,7 @@ export function Character({ isExpanded }: CharacterProps) {
   const { viewport } = useThree();
   const [hasAppeared, setHasAppeared] = useState(false);
   const texture = useTexture(characterImage);
+  const backTexture = useTexture(characterBackImage);
 
   // 텍스처 품질 설정
   texture.anisotropy = 16;
@@ -93,12 +95,34 @@ export function Character({ isExpanded }: CharacterProps) {
         opacityRef.current = 1 - fadeProgress;
       }
 
+      // --- 이미지 교체: 뒤돌기 90도 이후부터 뒷모습 ---
+      const useBack = turnProgress > 0.5;
+      // 본체 텍스처 변경
+      if (meshRef.current.material instanceof THREE.MeshBasicMaterial) {
+        meshRef.current.material.map = useBack ? backTexture : texture;
+        meshRef.current.material.needsUpdate = true;
+      }
+      // 글로우 텍스처 변경
+      if (glowRef.current.material instanceof THREE.MeshBasicMaterial) {
+        glowRef.current.material.map = useBack ? backTexture : texture;
+        glowRef.current.material.needsUpdate = true;
+      }
+
       if (disappearProgress >= 1) {
         isDisappearingRef.current = false;
         setHasAppeared(false);
         startTimeRef.current = null;
         // 회전 초기화
         meshRef.current.rotation.y = 0;
+        // 텍스처 원상복구
+        if (meshRef.current.material instanceof THREE.MeshBasicMaterial) {
+          meshRef.current.material.map = texture;
+          meshRef.current.material.needsUpdate = true;
+        }
+        if (glowRef.current.material instanceof THREE.MeshBasicMaterial) {
+          glowRef.current.material.map = texture;
+          glowRef.current.material.needsUpdate = true;
+        }
       }
 
       // 스케일 적용

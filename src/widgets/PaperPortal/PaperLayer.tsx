@@ -20,10 +20,15 @@ export function PaperLayer({
 }: PaperLayerProps) {
   const groupRef = useRef<THREE.Group>(null);
   const [isExpanded, setIsExpanded] = useState(false);
+  const [hasBeenExpanded, setHasBeenExpanded] = useState(false);
   const { viewport } = useThree();
 
-  // 그룹 전체(종이+네온)에 애니메이션 적용
-  usePortalAnimation(groupRef as any, { layerIndex, baseZ, isExpanded });
+  // 그룹 전체(종이+네온)에 애니메이션 적용 - hasBeenExpanded를 사용해 한 번 확장되면 유지
+  usePortalAnimation(groupRef as any, {
+    layerIndex,
+    baseZ,
+    isExpanded: hasBeenExpanded,
+  });
 
   // 1. 입체 종이 및 네온 테두리 생성 (한 번에 계산!)
   const { paperGeo, neonGeo, thickness } = useMemo(() => {
@@ -68,7 +73,8 @@ export function PaperLayer({
       <mesh
         geometry={paperGeo}
         onClick={() => {
-          setIsExpanded(true);
+          setIsExpanded(!isExpanded);
+          if (!hasBeenExpanded) setHasBeenExpanded(true);
           onExpand?.();
         }}
         onPointerEnter={() => (document.body.style.cursor = "pointer")}
