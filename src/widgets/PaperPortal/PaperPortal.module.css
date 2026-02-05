@@ -1,0 +1,15 @@
+/* PaperPortal 스타일 */
+.portalContainer {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+  z-index: 15;
+}
+
+.canvas {
+  width: 100%;
+  height: 100%;
+}
