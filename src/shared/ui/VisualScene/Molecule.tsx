@@ -1,5 +1,7 @@
-import { useRef, useMemo } from "react";
+import { useRef, useMemo, useState } from "react";
 import * as THREE from "three";
+import { useFrame } from "@react-three/fiber";
+import { Text } from "@react-three/drei";
 import { useWheelScaleOnRef } from "../../hooks/useWheelScale";
 import { Ligand } from "./Ligand";
 
@@ -9,6 +11,7 @@ type MoleculeProps = {
   onGrabStart?: () => void;
   onGrabEnd?: () => void;
   containerRef?: React.RefObject<HTMLElement | null>;
+  onHover?: (index: number | null) => void;
 };
 
 // 5대 강점 데이터 구조
@@ -24,17 +27,24 @@ const STRENGTHS = [
  * Molecule 컴포넌트: 5대 강점을 표현하는 3D 구조
  * - Connectedness를 중심으로 4개의 강점이 배치
  */
-export function Molecule({ containerRef }: MoleculeProps) {
+export function Molecule({ containerRef, onHover }: MoleculeProps) {
   const groupRef = useRef<THREE.Group>(null);
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const pulseRef = useRef(0);
 
   // 마우스 휠 스케일 훅 적용
   useWheelScaleOnRef(groupRef, {
-    initial: 0.6,
-    min: 0.4,
-    max: 0.9,
+    initial: 1.0,
+    min: 0.6,
+    max: 1.5,
     damping: 8,
     step: 0.0008,
     containerRef,
+  });
+
+  // 박동 애니메이션
+  useFrame((state) => {
+    pulseRef.current = Math.sin(state.clock.elapsedTime * 2) * 0.3 + 1;
   });
 
   // 연결선 데이터 생성 (중심에서 나머지 4개로)
@@ -51,17 +61,31 @@ export function Molecule({ containerRef }: MoleculeProps) {
   }, []);
 
   return (
-    <group ref={groupRef} position={[1.5, 0, 0]}>
+    <group ref={groupRef} position={[0, 0, 0]}>
       {/* 5개의 강점 구체들 */}
       {STRENGTHS.map((strength, index) => {
         const isCenter = index === 0;
+        const isHovered = hoveredIndex === index;
         const pos = new THREE.Vector3(
           ...(strength.position as [number, number, number]),
         );
 
         return (
           <group key={strength.name} position={pos}>
-            <mesh>
+            <mesh
+              scale={isHovered ? 1.15 : 1}
+              onPointerOver={(e) => {
+                e.stopPropagation();
+                setHoveredIndex(index);
+                onHover?.(index);
+                document.body.style.cursor = "pointer";
+              }}
+              onPointerOut={() => {
+                setHoveredIndex(null);
+                onHover?.(null);
+                document.body.style.cursor = "auto";
+              }}
+            >
               <sphereGeometry args={[isCenter ? 0.5 : 0.4, 32, 32]} />
               <meshStandardMaterial
                 color={strength.color}
@@ -69,6 +93,23 @@ export function Molecule({ containerRef }: MoleculeProps) {
                 metalness={0.1}
               />
             </mesh>
+
+            {/* 호버 시 이름 표시 */}
+            {isHovered && (
+              <Text
+                position={[0, isCenter ? 0.8 : 0.7, 0]}
+                fontSize={0.12}
+                color="#ffffff"
+                anchorX="center"
+                anchorY="middle"
+                outlineWidth={0.012}
+                outlineColor="#7c6fd6"
+                letterSpacing={0.05}
+                maxWidth={2}
+              >
+                {strength.name}
+              </Text>
+            )}
 
             {/* 리간드(작은 분자 스틱) 추가 */}
             <group>
@@ -106,6 +147,10 @@ export function Molecule({ containerRef }: MoleculeProps) {
         const length = direction.length();
         const midpoint = start.clone().add(end).multiplyScalar(0.5);
 
+        // 호버된 구체와 연결된 선인지 확인
+        const isConnected = hoveredIndex === 0 || hoveredIndex === connIndex;
+        const lineIntensity = isConnected ? pulseRef.current : 1;
+
         return (
           <group key={connIndex} position={midpoint}>
             <mesh
@@ -114,11 +159,15 @@ export function Molecule({ containerRef }: MoleculeProps) {
                 self.rotateX(Math.PI / 2);
               }}
             >
-              <cylinderGeometry args={[0.03, 0.03, length, 16]} />
+              <cylinderGeometry
+                args={[0.03 * lineIntensity, 0.03 * lineIntensity, length, 16]}
+              />
               <meshStandardMaterial
                 color="#FFD700"
                 roughness={0.3}
                 metalness={0.5}
+                emissive="#FFD700"
+                emissiveIntensity={isConnected ? 0.8 * lineIntensity : 0.3}
               />
             </mesh>
           </group>

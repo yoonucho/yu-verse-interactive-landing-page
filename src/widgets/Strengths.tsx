@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Container, Section, VisualScene } from "../shared";
 import styles from "./Strengths.module.css";
 
@@ -6,6 +7,8 @@ import styles from "./Strengths.module.css";
  * 5개 카드 그리드: 온라인 인증, 무료 리소스, 교육 프로그램
  */
 export function Strengths() {
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+
   const handleCardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     alert("준비중입니다 🚀");
@@ -55,6 +58,7 @@ export function Strengths() {
       spacing="lg"
       id="strengths"
       aria-labelledby="edu-title"
+      className={styles.strengths}
     >
       {/* 3D 이미지 영역 (비주얼 요소) */}
       <Container>
@@ -73,7 +77,11 @@ export function Strengths() {
 
           {/* 3D 이미지 영역 (비주얼 요소) */}
           <div className={styles.imageContainer} aria-hidden="true">
-            <VisualScene type="protein" color="#4e54c8" />
+            <VisualScene
+              type="protein"
+              color="#4e54c8"
+              onHover={setHoveredIndex}
+            />
           </div>
         </div>
       </Container>
@@ -82,7 +90,11 @@ export function Strengths() {
         {/* 카드 그리드 */}
         <div className={styles.cardsGrid} role="list">
           {cards.map((card, index) => (
-            <article key={index} className={styles.card} role="listitem">
+            <article
+              key={index}
+              className={`${styles.card} ${hoveredIndex === index ? styles.cardActive : ""}`}
+              role="listitem"
+            >
               <div className={styles.cardIcon} aria-hidden="true">
                 {card.icon}
               </div>
