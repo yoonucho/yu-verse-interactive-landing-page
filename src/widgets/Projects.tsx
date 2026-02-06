@@ -1,50 +1,58 @@
-import { cn, Container, Section, Typography } from "../shared";
+import { Container, Section, Typography } from "../shared";
+import { useIntersectionObserver } from "../shared/hooks/useIntersectionObserver";
+import { ProjectCard } from "./ProjectCard";
 import styles from "./Projects.module.css";
 
 /**
  * Projects 섹션 위젯
- * 5개 프로젝트 카드 그리드
+ * 5개 프로젝트 카드 그리드 - 3D 플립 카드
  */
 export function Projects() {
-  const handleProjectClick = (projectId: number) => {
-    alert(`프로젝트 ${projectId} 상세 페이지 준비중입니다 🚀`);
-  };
+  const { ref, isVisible } = useIntersectionObserver({ threshold: 0.1 });
 
   const projects = [
     {
       id: 1,
       title: "Youth Suicide Prevention Campaign",
-      focus: "Empathy through Interaction",
+      subtitle: "Empathy through Interaction",
       description:
-        "Designing digital experiences that embrace the inner emotions of teenagers through emotion expression training games and school culture development.",
+        "Designing <strong>digital experiences</strong> that embrace the inner emotions of teenagers through <strong>emotion expression training</strong> games and school culture development.",
+      color: { from: "#8B7BE8", to: "#53469C" },
+      link: "#",
     },
     {
       id: 2,
       title: "Samsung Smart School",
-      focus: "Immersive Strengths",
+      subtitle: "Immersive Strengths",
       description:
-        "Developing immersive strengthsal content where children participate proactively through chatbots, storytelling and interactive quizzes.",
+        "Developing <strong>immersive educational content</strong> where children participate proactively through <strong>chatbots, storytelling</strong> and interactive quizzes.",
+      color: { from: "#4A90E2", to: "#2E5C8A" },
+      link: "#",
     },
     {
       id: 3,
       title: "Micro-Investment Origin",
-      focus: "Delightful UX",
+      subtitle: "Delightful UX",
       description:
-        "Implementing interactive financial interfaces with 3D flip effects and delightful animations that bring joy to users.",
+        "Implementing <strong>interactive financial interfaces</strong> with 3D flip effects and <strong>delightful animations</strong> that bring joy to users.",
+      color: { from: "#FFBF00", to: "#CC8800" },
+      link: "#",
     },
     {
       id: 4,
       title: "Project 04",
-      focus: "Coming Soon",
+      subtitle: "Coming Soon",
       description:
-        "A new constellation of value is forming. Stay tuned for more details about this exciting project.",
+        "A new <strong>constellation of value</strong> is forming. Stay tuned for more details about this exciting project.",
+      color: { from: "#9B91E2", to: "#6B5FB3" },
     },
     {
       id: 5,
       title: "Project 05",
-      focus: "Coming Soon",
+      subtitle: "Coming Soon",
       description:
-        "Another meaningful journey is about to begin. More information will be revealed soon.",
+        "Another <strong>meaningful journey</strong> is about to begin. More information will be revealed soon.",
+      color: { from: "#D4D0FF", to: "#A9A3E8" },
     },
   ];
 
@@ -75,47 +83,18 @@ export function Projects() {
         </div>
 
         {/* 프로젝트 카드 그리드 */}
-        <div className={styles.projectGrid} role="list">
+        <div className={styles.projectGrid} role="list" ref={ref}>
           {projects.map((project) => (
-            <article
+            <ProjectCard
               key={project.id}
-              className={styles.projectCard}
-              role="listitem"
-              onClick={() => handleProjectClick(project.id)}
-            >
-              <div className={styles.cardContent}>
-                <Typography
-                  as="span"
-                  className={cn(styles.projectNumber, "leading-none")}
-                >
-                  0{project.id}
-                </Typography>
-                <Typography
-                  variant="h3"
-                  className={cn(styles.projectTitle, "text-text-primary")}
-                >
-                  {project.title}
-                </Typography>
-                <Typography
-                  as="p"
-                  className={cn(
-                    styles.projectFocus,
-                    "mb-4 text-text-secondary opacity-80",
-                  )}
-                >
-                  {project.focus}
-                </Typography>
-                <Typography
-                  variant="body"
-                  className={cn(
-                    styles.projectDescription,
-                    "text-text-secondary",
-                  )}
-                >
-                  {project.description}
-                </Typography>
-              </div>
-            </article>
+              id={project.id}
+              title={project.title}
+              subtitle={project.subtitle}
+              description={project.description}
+              color={project.color}
+              link={project.link}
+              isVisible={isVisible}
+            />
           ))}
         </div>
       </Container>
