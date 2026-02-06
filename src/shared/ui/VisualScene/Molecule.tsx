@@ -62,7 +62,7 @@ function LiquidLightFlow({
   }[];
   hoveredIndex: number | null;
 }) {
-  // 전역 박동(Pulse) 효과를 위한 레프
+  // 전역 심장 박동(Pulse) 효과를 위한 레프
   const globalPulseRef = useRef(0);
 
   // 각 연결선마다 여러 개의 빛줄기
@@ -296,6 +296,12 @@ export function Molecule({
   const rotationVelocity = useRef({ x: 0, y: 0 });
   const currentRotation = useRef({ x: 0, y: 0 });
 
+  // ─── 클릭/드래그 판정 분리 ───
+  const dragStartPos = useRef({ x: 0, y: 0 });
+  const totalDragDistance = useRef(0);
+  const wasDragging = useRef(false);
+  const CLICK_THRESHOLD = 5; // 5px 이하 이동은 클릭으로 인식
+
   // Spring Back 설정: 무중력 상태의 쫀득한 복구 느낌
   const INERTIA_DAMPING = 0.96; // 관성 감쇠 (높을수록 오래 지속)
   const SPRING_STIFFNESS = 0.015; // 탄성 강도 (정면으로 당기는 힘)
@@ -311,6 +317,9 @@ export function Molecule({
     const handleMouseDown = (e: MouseEvent) => {
       isDragging.current = true;
       previousMousePos.current = { x: e.clientX, y: e.clientY };
+      dragStartPos.current = { x: e.clientX, y: e.clientY };
+      totalDragDistance.current = 0;
+      wasDragging.current = false;
       rotationVelocity.current = { x: 0, y: 0 };
     };
 
@@ -319,6 +328,14 @@ export function Molecule({
 
       const deltaX = e.clientX - previousMousePos.current.x;
       const deltaY = e.clientY - previousMousePos.current.y;
+
+      // 총 이동 거리 누적
+      totalDragDistance.current += Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+
+      // 임계값 초과 시 드래그로 판정
+      if (totalDragDistance.current > CLICK_THRESHOLD) {
+        wasDragging.current = true;
+      }
 
       // 회전 속도 계산 (부드러운 드래그)
       rotationVelocity.current.x = deltaY * 0.003;
@@ -503,6 +520,11 @@ export function Molecule({
               }}
               onClick={(e) => {
                 e.stopPropagation();
+                // 드래그 후에는 클릭 무시 (임계값 초과 시)
+                if (wasDragging.current) {
+                  wasDragging.current = false;
+                  return;
+                }
                 onClickSphere?.(index);
               }}
             >
