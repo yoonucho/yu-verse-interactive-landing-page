@@ -6,7 +6,12 @@
 
 /* 섹션 전체 다크 배경 - 우주적 그라데이션 */
 .strengths {
-  background: linear-gradient(180deg, #0a0a14 0%, #0d0d1a 50%, #0f0f20 100%);
+  background: linear-gradient(
+    180deg,
+    var(--color-navy-darker) 0%,
+    #0d0d1a 50%,
+    #0f0f20 100%
+  );
   position: relative;
   overflow: hidden;
 }
@@ -27,8 +32,7 @@
 }
 
 .description {
-  font-size: 1.125rem;
-  /* 18px */
+  font-size: var(--font-size-base);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
 }
@@ -37,12 +41,12 @@
   align-self: flex-start;
   padding: 1rem 2.5rem;
   background-color: var(--color-purple-accent);
-  color: white;
+  color: var(--color-white);
   font-size: 1rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  border-radius: 2.5rem;
+  border-radius: var(--radius-lg);
   border: none;
   cursor: pointer;
   transition: all 0.3s ease;
@@ -55,7 +59,6 @@
 
 .lifeScience {
   overflow: hidden;
-  /* 가로 스크롤 방지 */
 }
 
 .imageContainer {
@@ -66,37 +69,18 @@
   align-items: center;
   justify-content: center;
   z-index: 1;
-  /* 텍스트보다 위에 표시 */
-  /* overflow: hidden 제거하여 원자가 박스 밖으로 나갈 수 있게 함 */
 }
 
 .placeholder {
-  font-size: 1.125rem;
+  font-size: var(--font-size-base);
   color: rgba(255, 255, 255, 0.5);
   text-align: center;
-}
-
-.title {
-  font-size: 3rem;
-  /* 48px */
-  font-weight: 900;
-  line-height: 1.3;
-  color: var(--color-white);
-  margin-bottom: 1rem;
-}
-
-.subtitle {
-  font-size: 1.25rem;
-  /* 20px */
-  line-height: 1.6;
-  color: rgba(255, 255, 255, 0.9);
 }
 
 .content {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 6rem;
-  /* 96px */
   align-items: center;
 }
 
@@ -106,7 +90,6 @@
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 2.5rem;
-  /* 40px */
 }
 
 .card {
@@ -114,7 +97,7 @@
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
+  border-radius: var(--radius-md);
   padding: 2.5rem 2rem;
   transition: all 0.3s ease;
 }
@@ -167,14 +150,13 @@
 
 .cardIcon {
   width: 4rem;
-  /* 64px */
   height: 4rem;
   background: linear-gradient(
     135deg,
     var(--color-purple-accent) 0%,
     var(--color-navy-dark) 100%
   );
-  border-radius: 0.75rem;
+  border-radius: var(--radius-md);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -183,8 +165,7 @@
 }
 
 .cardTitle {
-  font-size: 1.5rem;
-  /* 24px */
+  font-size: var(--font-size-lg);
   font-weight: 700;
   line-height: 1.4;
   color: var(--color-white);
@@ -192,7 +173,7 @@
 }
 
 .cardDescription {
-  font-size: 1rem;
+  font-size: var(--font-size-base);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1.5rem;
@@ -223,11 +204,6 @@
 @media (max-width: 640px) {
   .cardsGrid {
     grid-template-columns: 1fr;
-  }
-
-  .title {
-    font-size: 2.25rem;
-    /* 36px */
   }
 
   .header {

@@ -1,6 +1,6 @@
 import { useState, useRef, useCallback } from "react";
 import { Network, ShieldCheck, Heart, Anchor, Brain } from "lucide-react";
-import { Container, Section, VisualScene } from "../shared";
+import { cn, Container, Section, VisualScene, Typography } from "../shared";
 import styles from "./Strengths.module.css";
 
 /**
@@ -88,13 +88,21 @@ export function Strengths() {
           {/* 텍스트 컨텐츠 */}
           {/* 헤더 */}
           <div className={styles.header}>
-            <h2 id="edu-title" className={styles.title}>
+            <Typography
+              variant="h2"
+              id="edu-title"
+              className="section-title text-white opacity-80"
+            >
               The 5 Sources of Warmth
-            </h2>
-            <p className={styles.subtitle}>
+            </Typography>
+            <Typography
+              as="p"
+              variant={null}
+              className="section-subtitle text-white/90"
+            >
               My strengths that create meaningful connections in the digital
               space
-            </p>
+            </Typography>
           </div>
 
           {/* 3D 이미지 영역 (비주얼 요소) */}
@@ -124,8 +132,18 @@ export function Strengths() {
               <div className={styles.cardIcon} aria-hidden="true">
                 {card.icon}
               </div>
-              <h3 className={styles.cardTitle}>{card.title}</h3>
-              <p className={styles.cardDescription}>{card.description}</p>
+              <Typography
+                variant="h3"
+                className={cn(styles.cardTitle, "text-white")}
+              >
+                {card.title}
+              </Typography>
+              <Typography
+                variant="body"
+                className={cn(styles.cardDescription, "text-white/90")}
+              >
+                {card.description}
+              </Typography>
               <a href="#" className={styles.cardLink} onClick={handleCardClick}>
                 {card.link} →
               </a>
