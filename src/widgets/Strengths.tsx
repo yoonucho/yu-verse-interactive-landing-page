@@ -1,4 +1,5 @@
 import { useState, useRef, useCallback } from "react";
+import { Network, ShieldCheck, Heart, Anchor, Brain } from "lucide-react";
 import { Container, Section, VisualScene } from "../shared";
 import styles from "./Strengths.module.css";
 
@@ -38,35 +39,35 @@ export function Strengths() {
 
   const cards = [
     {
-      icon: "�",
+      icon: <Network size={32} strokeWidth={1.5} />,
       title: "Connectedness",
       description:
         "I understand the organic flow of teams and projects, coordinating the relationships between people and processes.",
       link: "Learn More",
     },
     {
-      icon: "✅",
+      icon: <ShieldCheck size={32} strokeWidth={1.5} />,
       title: "Responsibility",
       description:
         "With trusted execution and accountability, I complete every task I take on to the end.",
       link: "Learn More",
     },
     {
-      icon: "💚",
+      icon: <Heart size={32} strokeWidth={1.5} />,
       title: "Empathy",
       description:
         "I intuitively understand others' emotions, designing warm, user-centered experiences.",
       link: "Learn More",
     },
     {
-      icon: "💙",
+      icon: <Anchor size={32} strokeWidth={1.5} />,
       title: "Belief",
       description:
         "I infuse all projects with a firm philosophy that 'people come before technology.'",
       link: "Learn More",
     },
     {
-      icon: "🧠",
+      icon: <Brain size={32} strokeWidth={1.5} />,
       title: "Intellection",
       description:
         "Through deep thinking and reflection, I design architectures with logical foundations.",
