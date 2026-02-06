@@ -1,26 +1,46 @@
-import { useState, useRef } from "react";
-import { Canvas } from "@react-three/fiber";
+import { useRef } from "react";
+import * as THREE from "three";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import {
   Float,
   Environment,
   PerspectiveCamera,
-  OrbitControls,
+  Stars,
 } from "@react-three/drei";
+import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { Molecule } from "./Molecule";
 import { ThreeErrorBoundary } from "./ThreeErrorBoundary";
+
+/** 마우스 움직임에 따라 카메라가 미세하게 반응하는 패럴랙스 */
+function CameraRig() {
+  const { camera } = useThree();
+  const targetPos = useRef(new THREE.Vector3(0, 0, 8));
+
+  useFrame((state) => {
+    // pointer: -1 ~ 1 범위 → 카메라 오프셋으로 변환
+    targetPos.current.set(state.pointer.x * 0.3, state.pointer.y * 0.2, 8);
+
+    // 부드럽게 따라가기
+    camera.position.lerp(targetPos.current, 0.05);
+    camera.lookAt(0, 0, 0);
+  });
+
+  return null;
+}
 
 type VisualSceneProps = {
   color?: string;
   type?: "protein" | "material";
   onHover?: (index: number | null) => void;
+  onClickSphere?: (index: number) => void;
 };
 
-/**
- * VisualScene: 3D 오브젝트를 화면에 그리기 위한 전체 공간(Scene)을 설정하는 컴포넌트입니다.
- */
-export function VisualScene({ color, type, onHover }: VisualSceneProps) {
-  // 사용자가 마우스로 원자를 잡고 있을 때, 화면 전체가 회전하거나 흔들리는 것을 멈추기 위한 상태 값입니다.
-  const [controlsEnabled, setControlsEnabled] = useState(true);
+export function VisualScene({
+  color,
+  type,
+  onHover,
+  onClickSphere,
+}: VisualSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null!);
 
   return (
@@ -29,14 +49,15 @@ export function VisualScene({ color, type, onHover }: VisualSceneProps) {
       style={{ width: "100%", height: "100%", position: "relative" }}
       aria-hidden="true"
     >
-      {/* Canvas: 3D 그래픽을 그리는 도화지입니다. */}
       <Canvas
         gl={{
           alpha: true,
           powerPreference: "high-performance",
-          antialias: false,
+          antialias: true,
+          toneMapping: THREE.ACESFilmicToneMapping,
+          toneMappingExposure: 1.2,
         }}
-        dpr={1}
+        dpr={[1, 1.5]}
         eventSource={containerRef.current as HTMLElement}
         style={{
           position: "absolute",
@@ -49,44 +70,44 @@ export function VisualScene({ color, type, onHover }: VisualSceneProps) {
         }}
       >
         <ThreeErrorBoundary>
-          {/* PerspectiveCamera: 카메라의 위치를 설정합니다. (z=10 만큼 뒤에서 보고 있음) */}
-          <PerspectiveCamera makeDefault position={[0, 0, 10]} />
-          {/* OrbitControls: 마우스 드래그로 화면 전체를 회전시킬 수 있게 해주는 기능입니다. */}
-          <OrbitControls
-            enableZoom={false}
-            enablePan={false}
-            makeDefault
-            enabled={controlsEnabled}
-          />
-          {/* 조명 설정: 3D 물체가 입체적으로 보이도록 여러 방향에서 빛을 비춥니다. */}
-          <ambientLight intensity={0.5} />
-          <pointLight position={[10, 10, 10]} intensity={1} />
-          <spotLight
-            position={[-10, 10, 10]}
-            angle={0.15}
-            penumbra={1}
-            intensity={1}
+          <PerspectiveCamera makeDefault position={[0, 0, 8]} fov={40} />
+          <CameraRig />
+
+          <ambientLight intensity={0.15} />
+          <pointLight position={[5, 5, 8]} intensity={0.3} color="#FFF8F0" />
+          <pointLight position={[-5, -3, 5]} intensity={0.15} color="#8888CC" />
+
+          <Stars
+            radius={80}
+            depth={60}
+            count={2000}
+            factor={2}
+            saturation={0.1}
+            fade
+            speed={0.3}
           />
 
-          {/* Float: 물체를 공중에 둥둥 떠 있는 것처럼 부드럽게 움직이게 만듭니다. */}
-          <Float
-            speed={2}
-            rotationIntensity={controlsEnabled ? 0.5 : 0}
-            floatIntensity={controlsEnabled ? 1 : 0}
-          >
-            {/* [가장 중요한 부분!] Molecule: 실제 분자(구슬과 선)를 그리는 핵심 로직이 들어있는 컴포넌트입니다. */}
+          <Float speed={1.5} rotationIntensity={0.3} floatIntensity={0.5}>
             <Molecule
               color={color}
               type={type}
-              onGrabStart={() => setControlsEnabled(false)} // 원자를 잡기 시작하면 화면 회전을 멈춤
-              onGrabEnd={() => setControlsEnabled(true)} // 원자를 놓으면 다시 화면 회전을 허용
-              containerRef={containerRef} // 휠 확대를 프레임 안에서만 동작하게 함
-              onHover={onHover} // 호버 시 카드 하이라이트를 위한 콜백
+              containerRef={containerRef}
+              onHover={onHover}
+              onClickSphere={onClickSphere}
             />
           </Float>
 
-          {/* Environment: 주변 배경 환경 광원을 추가하여 금속 질감 등을 더 예쁘게 표현합니다. */}
-          <Environment preset="city" />
+          <Environment preset="night" environmentIntensity={0.3} />
+
+          <EffectComposer>
+            <Bloom
+              intensity={0.4}
+              luminanceThreshold={0.6}
+              luminanceSmoothing={0.4}
+              mipmapBlur
+              radius={0.6}
+            />
+          </EffectComposer>
         </ThreeErrorBoundary>
       </Canvas>
     </div>

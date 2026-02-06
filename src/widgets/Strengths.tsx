@@ -1,13 +1,35 @@
-import { useState } from "react";
+import { useState, useRef, useCallback } from "react";
 import { Container, Section, VisualScene } from "../shared";
 import styles from "./Strengths.module.css";
 
 /**
  * Strengths 섹션 위젯
- * 5개 카드 그리드: 온라인 인증, 무료 리소스, 교육 프로그램
+ * 5개 카드 그리드: 연결성, 책임, 공감, 신념, 지적 사고
  */
 export function Strengths() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [clickedIndex, setClickedIndex] = useState<number | null>(null);
+  const cardRefs = useRef<(HTMLElement | null)[]>([]);
+  const clickTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  const handleSphereClick = useCallback((index: number) => {
+    // 이전 타이머 정리
+    if (clickTimerRef.current) clearTimeout(clickTimerRef.current);
+
+    // 해당 카드로 스크롤
+    cardRefs.current[index]?.scrollIntoView({
+      behavior: "smooth",
+      block: "center",
+    });
+
+    // 활성 상태 설정
+    setClickedIndex(index);
+
+    // 3초 후 자동 해제
+    clickTimerRef.current = setTimeout(() => {
+      setClickedIndex(null);
+    }, 3000);
+  }, []);
 
   const handleCardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
@@ -60,7 +82,6 @@ export function Strengths() {
       aria-labelledby="edu-title"
       className={styles.strengths}
     >
-      {/* 3D 이미지 영역 (비주얼 요소) */}
       <Container>
         <div className={styles.content}>
           {/* 텍스트 컨텐츠 */}
@@ -81,6 +102,7 @@ export function Strengths() {
               type="protein"
               color="#4e54c8"
               onHover={setHoveredIndex}
+              onClickSphere={handleSphereClick}
             />
           </div>
         </div>
@@ -92,7 +114,10 @@ export function Strengths() {
           {cards.map((card, index) => (
             <article
               key={index}
-              className={`${styles.card} ${hoveredIndex === index ? styles.cardActive : ""}`}
+              ref={(el) => {
+                cardRefs.current[index] = el;
+              }}
+              className={`${styles.card} ${hoveredIndex === index ? styles.cardActive : ""} ${clickedIndex === index ? styles.cardClicked : ""}`}
               role="listitem"
             >
               <div className={styles.cardIcon} aria-hidden="true">

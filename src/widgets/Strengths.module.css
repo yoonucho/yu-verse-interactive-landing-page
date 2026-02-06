@@ -4,9 +4,26 @@
   gap: 2rem;
 }
 
-/* 섹션 전체 다크 배경 */
+/* 섹션 전체 다크 배경 - 우주적 그라데이션 */
 .strengths {
-  background-color: #0d0d1a;
+  background: linear-gradient(180deg, #0a0a14 0%, #0d0d1a 50%, #0f0f20 100%);
+  position: relative;
+  overflow: hidden;
+}
+
+.strengths::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(138, 43, 226, 0.05) 0%,
+    transparent 70%
+  );
+  pointer-events: none;
 }
 
 .description {
@@ -113,7 +130,39 @@
   transform: translateY(-4px) scale(1.02);
   box-shadow: 0 12px 32px rgba(255, 215, 0, 0.3);
   border-color: #ffd700;
-  background: linear-gradient(135deg, #fffef7 0%, #fff8e7 100%);
+}
+
+/* 구체 클릭 시 황금색 강조 상태 */
+.cardClicked {
+  transform: translateY(-6px) scale(1.03);
+  border-color: #ffd700;
+  box-shadow:
+    0 0 20px rgba(255, 215, 0, 0.4),
+    0 0 60px rgba(255, 215, 0, 0.15),
+    0 16px 40px rgba(255, 215, 0, 0.25);
+  background: linear-gradient(
+    135deg,
+    rgba(255, 215, 0, 0.12) 0%,
+    rgba(255, 191, 0, 0.06) 50%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  animation: cardGoldenPulse 2s ease-in-out infinite;
+}
+
+@keyframes cardGoldenPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 20px rgba(255, 215, 0, 0.4),
+      0 0 60px rgba(255, 215, 0, 0.15),
+      0 16px 40px rgba(255, 215, 0, 0.25);
+  }
+  50% {
+    box-shadow:
+      0 0 30px rgba(255, 215, 0, 0.6),
+      0 0 80px rgba(255, 215, 0, 0.2),
+      0 16px 40px rgba(255, 215, 0, 0.35);
+  }
 }
 
 .cardIcon {
