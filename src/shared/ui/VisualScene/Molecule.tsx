@@ -7,7 +7,7 @@ import { useWheelScaleOnRef } from "../../hooks/useWheelScale";
 /**
  * Molecule 컴포넌트
  * - 5개의 강점 구슬과 이를 연결하는 '빛의 관' 시각화
- * - 완벽한 직선 연결 + 투명한 유리관 + 흐르는 앰버 에너지
+ * - 직선 연결 + 투명한 유리관 + 흐르는 앰버 에너지
  */
 
 type MoleculeProps = {
@@ -362,9 +362,9 @@ export function Molecule({
   }, [gl]);
 
   useWheelScaleOnRef(groupRef, {
-    initial: 0.6,
+    initial: 0.55,
     min: 0.4,
-    max: 1.3,
+    max: 0.9,
     damping: 8,
     step: 0.0008,
     containerRef,
