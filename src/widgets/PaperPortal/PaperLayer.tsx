@@ -9,6 +9,7 @@ interface PaperLayerProps {
   color: string;
   scale: number;
   rotation: number;
+  shouldExpand: boolean;
   onExpand?: () => void;
 }
 
@@ -16,18 +17,17 @@ export function PaperLayer({
   layerIndex,
   baseZ,
   color,
+  shouldExpand,
   onExpand,
 }: PaperLayerProps) {
   const groupRef = useRef<THREE.Group>(null);
-  const [isExpanded, setIsExpanded] = useState(false);
-  const [hasBeenExpanded, setHasBeenExpanded] = useState(false);
   const { viewport } = useThree();
 
-  // 그룹 전체(종이+네온)에 애니메이션 적용 - hasBeenExpanded 사용 (한 번 확장되면 유지)
+  // 그룹 전체(종이+네온)에 애니메이션 적용 - shouldExpand 사용 (부모가 제어)
   usePortalAnimation(groupRef as any, {
     layerIndex,
     baseZ,
-    isExpanded: hasBeenExpanded,
+    isExpanded: shouldExpand,
   });
 
   // 1. 입체 종이 및 네온 테두리 생성 (한 번에 계산!)
@@ -73,8 +73,6 @@ export function PaperLayer({
       <mesh
         geometry={paperGeo}
         onClick={() => {
-          setIsExpanded(!isExpanded);
-          if (!hasBeenExpanded) setHasBeenExpanded(true);
           onExpand?.();
         }}
         onPointerEnter={() => (document.body.style.cursor = "pointer")}
@@ -88,13 +86,13 @@ export function PaperLayer({
           metalness={0}
           // 별 레이어가 확장되면 더 밝게 빛남
           emissive={new THREE.Color(color)}
-          emissiveIntensity={hasBeenExpanded ? 0.3 : 0.01}
+          emissiveIntensity={shouldExpand ? 0.3 : 0.01}
           transparent
         />
       </mesh>
 
-      {/* [2] 별 모양 네온 테두리 (클릭 후에만) */}
-      {isExpanded && (
+      {/* [2] 별 모양 네온 테두리 (확장 시에만) */}
+      {shouldExpand && (
         <mesh
           geometry={neonGeo}
           position={[0, 0, thickness / 2 + 0.01]} // 종이 두께만큼 앞으로 배치

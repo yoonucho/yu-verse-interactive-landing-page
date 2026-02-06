@@ -18,6 +18,10 @@ import styles from "./PaperPortal.module.css";
 export function PortalScene() {
   const [isExpanded, setIsExpanded] = useState(false);
   const [hasBeenExpanded, setHasBeenExpanded] = useState(false);
+  const [layerExpandStates, setLayerExpandStates] = useState<boolean[]>(
+    Array(10).fill(false),
+  );
+  const [isAnimating, setIsAnimating] = useState(false);
 
   // 파스텔 색상 팔레트
   const pastelColors = [
@@ -40,6 +44,59 @@ export function PortalScene() {
     scale: 1 - i * 0.05,
     rotation: 0, // 회전 제거로 그림자 깔끔하게
   }));
+
+  // 클릭 핸들러: 순차적 레이어 확장/축소
+  const handleClick = () => {
+    if (isAnimating) return; // 애니메이션 중이면 무시
+
+    setIsAnimating(true);
+
+    if (!isExpanded) {
+      // 확장: 0→9 순차적으로 (30ms 간격으로 더 빠르게!)
+      layers.forEach((_, index) => {
+        setTimeout(() => {
+          setLayerExpandStates((prev) => {
+            const newStates = [...prev];
+            newStates[index] = true;
+            return newStates;
+          });
+
+          // 마지막 레이어면 캐릭터 표시
+          if (index === layers.length - 1) {
+            setTimeout(() => {
+              setIsExpanded(true);
+              if (!hasBeenExpanded) setHasBeenExpanded(true);
+              setIsAnimating(false);
+            }, 30);
+          }
+        }, index * 30);
+      });
+    } else {
+      // 축소: 캐릭터 먼저 뒤돌아서 들어감 → 그 다음 레이어 9→0 순차 축소
+      setIsExpanded(false);
+
+      // 캐릭터가 완전히 들어가서 작아진 후 대기 (5000ms - 테스트용)
+      setTimeout(() => {
+        layers.forEach((_, index) => {
+          const reverseIndex = layers.length - 1 - index;
+          setTimeout(() => {
+            setLayerExpandStates((prev) => {
+              const newStates = [...prev];
+              newStates[reverseIndex] = false;
+              return newStates;
+            });
+
+            // 첫 레이어면 애니메이션 종료
+            if (reverseIndex === 0) {
+              setTimeout(() => {
+                setIsAnimating(false);
+              }, 50);
+            }
+          }, index * 50);
+        });
+      }, 2000);
+    }
+  };
 
   // 별 좌표와 속성 생성 (밤하늘 효과)
   const starCount = 50;
@@ -180,10 +237,8 @@ export function PortalScene() {
             color={layer.color}
             scale={1} // 애니메이션 훅에서 조절되도록 1로 고정
             rotation={0}
-            onExpand={() => {
-              setIsExpanded(!isExpanded);
-              if (!hasBeenExpanded) setHasBeenExpanded(true);
-            }}
+            shouldExpand={layerExpandStates[index]}
+            onExpand={handleClick}
           />
         ))}
 
