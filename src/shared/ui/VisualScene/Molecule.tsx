@@ -42,7 +42,7 @@ export function Molecule({ containerRef, onHover }: MoleculeProps) {
     containerRef,
   });
 
-  // 박동 애니메이션
+  // 호버시 확대  애니메이션
   useFrame((state) => {
     pulseRef.current = Math.sin(state.clock.elapsedTime * 2) * 0.3 + 1;
   });
@@ -89,8 +89,10 @@ export function Molecule({ containerRef, onHover }: MoleculeProps) {
               <sphereGeometry args={[isCenter ? 0.5 : 0.4, 32, 32]} />
               <meshStandardMaterial
                 color={strength.color}
-                roughness={0.8}
-                metalness={0.1}
+                roughness={0.4}
+                metalness={0.3}
+                emissive={strength.color}
+                emissiveIntensity={0.2}
               />
             </mesh>
 
