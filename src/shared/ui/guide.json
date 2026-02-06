@@ -1,0 +1,30 @@
+{
+  "mascotName": "YU Verse Guide",
+  "dialogues": [
+    {
+      "id": "welcome",
+      "text": "Welcome! I'm your guide to finding warmth in this digital universe. 😊"
+    },
+    {
+      "id": "gnb_guide",
+      "text": "The top menu is our compass. You can find projects in <span class='highlight'>Constellations</span>, my 5 strengths in <span class='highlight'>Sources</span>, and connect with me in <span class='highlight'>Signal</span>.",
+      "action": "highlight_gnb",
+      "motion": "look_up"
+    },
+    {
+      "id": "humanity",
+      "text": "We often feel technology is cold, but there's always a person behind it. Shall we discover that warmth together?",
+      "motion": "nod"
+    },
+    {
+      "id": "start",
+      "text": "Click a menu item or scroll down slowly to begin our journey! 🌌✨",
+      "motion": "nod"
+    },
+    {
+      "id": "goodbye",
+      "text": "See you around! 👋",
+      "action": "close_portal"
+    }
+  ]
+}

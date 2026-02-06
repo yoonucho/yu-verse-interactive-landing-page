@@ -170,3 +170,29 @@
     font-size: 0.75rem;
   }
 }
+
+/* GNB Highlight Glow Effect */
+/* GNB Highlight Glow Effect */
+@keyframes pulseGold {
+  0% {
+    box-shadow: 0 4px 10px rgba(255, 191, 0, 0.1);
+  }
+  50% {
+    box-shadow: 0 4px 25px rgba(255, 191, 0, 0.4); /* 과하지 않게 줄임 */
+    background-color: rgba(18, 18, 45, 0.95);
+  }
+  100% {
+    box-shadow: 0 4px 10px rgba(255, 191, 0, 0.1);
+  }
+}
+
+.header.glow {
+  animation: pulseGold 2s infinite ease-in-out;
+  border-bottom: none;
+}
+
+/* 네비게이션 텍스트도 은은하게 밝힘 */
+.glow .navLink {
+  color: #fff;
+  text-shadow: 0 0 15px rgba(255, 191, 0, 0.8);
+}

@@ -1,0 +1,57 @@
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 말풍선 스타일 (Dark Glassmorphism) */
+.bubble {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  padding: 1rem 1.25rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  font-size: 0.95rem;
+  line-height: 1.5;
+  color: white; /* 가독성 좋은 화이트 */
+  width: 220px;
+  min-height: 130px;
+  position: relative;
+  /* animation: fadeIn 0.3s ease-out;  <-- 타이핑 효과와 충돌 방지 위해 제거하거나 조정 필요 */
+  pointer-events: auto;
+  text-align: left;
+}
+
+/* 말풍선 꼬리 */
+.bubble::after {
+  content: "";
+  position: absolute;
+  bottom: -8px;
+  left: 30px;
+  width: 0;
+  height: 0;
+  border-left: 0px solid transparent;
+  border-right: 12px solid transparent;
+  border-top: 12px solid rgba(0, 0, 0, 0.6); /* 배경색과 일치 */
+}
+
+.nextHint {
+  font-size: 0.75rem;
+  margin-top: 0.8rem;
+  color: rgba(255, 255, 255, 0.6);
+  text-align: right;
+  font-weight: 400;
+  animation: fadeIn 0.5s ease-in-out infinite alternate;
+}
+
+/* 강조 텍스트 (Amber) */
+.highlight {
+  color: #ffbf00;
+  font-weight: 700;
+}

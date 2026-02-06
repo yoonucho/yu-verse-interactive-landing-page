@@ -4,10 +4,10 @@ import {
   Environment,
   PerspectiveCamera,
 } from "@react-three/drei";
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useState, useMemo, useRef } from "react";
 import { EffectComposer, Bloom } from "@react-three/postprocessing";
 import { PaperLayer } from "./PaperLayer";
-import { Character } from "./Character";
+import { PortalCharacter } from "./PortalCharacter";
 import { Star } from "./Star";
 import styles from "./PaperPortal.module.css";
 
@@ -45,6 +45,9 @@ export function PortalScene() {
     rotation: 0, // 회전 제거로 그림자 깔끔하게
   }));
 
+  // 캐릭터 Ref 생성
+  const characterRef = useRef<{ sayGoodbye: () => void }>(null);
+
   // 클릭 핸들러: 순차적 레이어 확장/축소
   const handleClick = () => {
     if (isAnimating) return; // 애니메이션 중이면 무시
@@ -72,30 +75,44 @@ export function PortalScene() {
         }, index * 30);
       });
     } else {
-      // 축소: 캐릭터 먼저 뒤돌아서 들어감 → 그 다음 레이어 9→0 순차 축소
-      setIsExpanded(false);
+      // 배경 클릭 시 로직 분기
 
-      // 캐릭터가 완전히 들어가서 작아진 후 대기 (5000ms - 테스트용)
-      setTimeout(() => {
-        layers.forEach((_, index) => {
-          const reverseIndex = layers.length - 1 - index;
-          setTimeout(() => {
-            setLayerExpandStates((prev) => {
-              const newStates = [...prev];
-              newStates[reverseIndex] = false;
-              return newStates;
-            });
+      // 1. 캐릭터가 아직 'goodbye' 상태가 아니라면 작별 인사를 먼저 시킴
+      if (characterRef.current) {
+        characterRef.current.sayGoodbye();
+        setIsAnimating(false); // 애니메이션 플래그 해제 (굿바이 시퀀스가 별도 진행)
+        return;
+      }
 
-            // 첫 레이어면 애니메이션 종료
-            if (reverseIndex === 0) {
-              setTimeout(() => {
-                setIsAnimating(false);
-              }, 50);
-            }
-          }, index * 50);
-        });
-      }, 2000);
+      // 2. 만약 characterRef가 없거나(이미 닫힘 등) 강제 종료 필요 시 기존 로직 수행
+      executeCloseSequence();
     }
+  };
+
+  const executeCloseSequence = () => {
+    // 축소: 캐릭터 먼저 뒤돌아서 들어감 → 그 다음 레이어 9→0 순차 축소
+    setIsExpanded(false);
+
+    // 캐릭터가 완전히 들어가서 작아진 후 대기 (5000ms - 테스트용)
+    setTimeout(() => {
+      layers.forEach((_, index) => {
+        const reverseIndex = layers.length - 1 - index;
+        setTimeout(() => {
+          setLayerExpandStates((prev) => {
+            const newStates = [...prev];
+            newStates[reverseIndex] = false;
+            return newStates;
+          });
+
+          // 첫 레이어면 애니메이션 종료
+          if (reverseIndex === 0) {
+            setTimeout(() => {
+              setIsAnimating(false);
+            }, 50);
+          }
+        }, index * 50);
+      });
+    }, 2000);
   };
 
   // 별 좌표와 속성 생성 (밤하늘 효과)
@@ -241,8 +258,12 @@ export function PortalScene() {
           />
         ))}
 
-        {/* 캐릭터는 가장 깊은 곳 앞에 배치 */}
-        <Character isExpanded={isExpanded} />
+        {/* 캐릭터: 맨 마지막에 렌더링 (가장 위에 보임) */}
+        <PortalCharacter
+          ref={characterRef}
+          isExpanded={isExpanded}
+          onClose={() => executeCloseSequence()}
+        />
       </Suspense>
 
       {/* Bloom 효과 - 별 구멍 테두리만 빛나게 */}

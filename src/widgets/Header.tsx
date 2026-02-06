@@ -15,6 +15,7 @@ import styles from "./Header.module.css";
  */
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
+  const [isGlowing, setIsGlowing] = useState(false);
 
   const throttledScroll = useMemo(
     () =>
@@ -28,6 +29,23 @@ export function Header() {
     window.addEventListener("scroll", throttledScroll);
     return () => window.removeEventListener("scroll", throttledScroll);
   }, [throttledScroll]);
+
+  // 가이드 액션 이벤트 리스너 (GNB 하이라이트)
+  useEffect(() => {
+    const handleGuideAction = (e: Event) => {
+      const customEvent = e as CustomEvent;
+      if (customEvent.detail?.action === "highlight_gnb") {
+        setIsGlowing(true);
+      } else {
+        setIsGlowing(false);
+      }
+    };
+
+    window.addEventListener("YU_VERSE_GUIDE_ACTION", handleGuideAction);
+    return () => {
+      window.removeEventListener("YU_VERSE_GUIDE_ACTION", handleGuideAction);
+    };
+  }, []);
 
   const handleCtaClick = () => {
     alert("준비중입니다 🚀");
@@ -56,7 +74,9 @@ export function Header() {
   };
 
   return (
-    <header className={`${styles.header} ${isScrolled ? styles.scrolled : ""}`}>
+    <header
+      className={`${styles.header} ${isScrolled ? styles.scrolled : ""} ${isGlowing ? styles.glow : ""}`}
+    >
       <Container>
         <div className={styles.headerInner}>
           {/* Logo */}
