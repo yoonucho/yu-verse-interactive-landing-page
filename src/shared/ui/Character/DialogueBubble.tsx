@@ -92,7 +92,7 @@ export function DialogueBubble({
       position={position}
       center
       style={{ pointerEvents: "none" }}
-      portal={{ current: document.body }} // 캔버스 밖으로 렌더링 (잘림 방지)
+      // portal prop removed to fix positioning issue
       zIndexRange={[100, 0]}
     >
       <div
