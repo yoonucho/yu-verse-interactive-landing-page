@@ -1,0 +1,71 @@
+.scrollToTopInfo {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    z-index: 40;
+    /* Header(50)보다 낮게 설정하여 겹침 방지 */
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(20px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background-color: rgba(18, 18, 45, 0.8);
+    /* Navy Dark with opacity */
+    border: 2px solid var(--color-purple-accent);
+    color: #d4d0ff;
+    /* Light Lavender */
+    cursor: pointer;
+    box-shadow:
+        0 0 10px rgba(83, 70, 156, 0.4),
+        0 0 20px rgba(83, 70, 156, 0.2);
+    transition: all 0.3s ease;
+    backdrop-filter: blur(8px);
+}
+
+.button:hover {
+    background-color: var(--color-purple-accent);
+    color: white;
+    transform: translateY(-4px);
+    box-shadow:
+        0 0 15px rgba(83, 70, 156, 0.8),
+        0 0 30px rgba(83, 70, 156, 0.4),
+        0 0 45px rgba(212, 208, 255, 0.2);
+    /* 강렬한 네온 글로우 */
+}
+
+.icon {
+    width: 24px;
+    height: 24px;
+    stroke-width: 2.5px;
+}
+
+@media (max-width: 768px) {
+    .scrollToTopInfo {
+        bottom: 20px;
+        right: 20px;
+    }
+
+    .button {
+        width: 40px;
+        height: 40px;
+    }
+
+    .icon {
+        width: 20px;
+        height: 20px;
+    }
+}

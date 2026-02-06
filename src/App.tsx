@@ -1,53 +1,37 @@
-import { lazy, Suspense } from 'react';
-import { Header, Footer, SectionSkeleton, Hero, LifeScience } from './widgets';
-import { ScrollToTop } from './shared';
+import { lazy, Suspense } from "react";
+import { Header, Hero, SectionSkeleton, Strengths } from "./widgets";
+import { ScrollToTop } from "./shared";
 
-// Lazy loaded widgets
-const MaterialsScience = lazy(() => import('./widgets/MaterialsScience').then(m => ({ default: m.MaterialsScience })));
-const Pipeline = lazy(() => import('./widgets/Pipeline').then(m => ({ default: m.Pipeline })));
-const Education = lazy(() => import('./widgets/Education').then(m => ({ default: m.Education })));
-const Company = lazy(() => import('./widgets/Company').then(m => ({ default: m.Company })));
-const Events = lazy(() => import('./widgets/Events').then(m => ({ default: m.Events })));
-const News = lazy(() => import('./widgets/News').then(m => ({ default: m.News })));
+// 섹션 레이지 로딩
+const Projects = lazy(() =>
+  import("./widgets/Projects").then((m) => ({ default: m.Projects })),
+);
+const Footer = lazy(() =>
+  import("./widgets/Footer").then((m) => ({ default: m.Footer })),
+);
 
 function App() {
-    return (
-        <>
-            <Header />
+  return (
+    <>
+      <Header />
 
-            <main role="main">
-                <Hero />
-                <LifeScience />
+      <main role="main">
+        <Hero />
 
-                <Suspense fallback={<SectionSkeleton reverse />}>
-                    <MaterialsScience />
-                </Suspense>
+        <Suspense fallback={<SectionSkeleton />}>
+          <Projects />
+        </Suspense>
 
-                <Suspense fallback={<SectionSkeleton />}>
-                    <Pipeline />
-                </Suspense>
+        <Strengths />
+      </main>
 
-                <Suspense fallback={<SectionSkeleton reverse />}>
-                    <Education />
-                </Suspense>
+      <Suspense fallback={<SectionSkeleton />}>
+        <Footer />
+      </Suspense>
 
-                <Suspense fallback={<SectionSkeleton />}>
-                    <Company />
-                </Suspense>
-
-                <Suspense fallback={<SectionSkeleton reverse />}>
-                    <Events />
-                </Suspense>
-
-                <Suspense fallback={<SectionSkeleton />}>
-                    <News />
-                </Suspense>
-            </main>
-
-            <Footer />
-            <ScrollToTop />
-        </>
-    );
+      <ScrollToTop />
+    </>
+  );
 }
 
 export default App;

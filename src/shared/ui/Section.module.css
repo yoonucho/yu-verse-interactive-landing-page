@@ -1,0 +1,55 @@
+.section {
+    width: 100%;
+    padding-top: 10rem;
+    /* 100px */
+    padding-bottom: 10rem;
+    /* 100px */
+}
+
+/* 배경 variants */
+.section--light {
+    background-color: var(--color-white);
+    color: var(--color-navy-dark);
+}
+
+.section--dark {
+    background-color: var(--color-navy-dark);
+    color: var(--color-white);
+}
+
+/* 간격 variants */
+.section--spacing-sm {
+    padding-top: 10rem;
+    /* 100px */
+    padding-bottom: 10rem;
+}
+
+.section--spacing-md {
+    padding-top: 12rem;
+    /* 120px */
+    padding-bottom: 12rem;
+}
+
+.section--spacing-lg {
+    padding-top: 15rem;
+    /* 150px */
+    padding-bottom: 15rem;
+}
+
+/* 반응형 간격 */
+@media (max-width: 768px) {
+    .section {
+        padding-top: 6rem;
+        padding-bottom: 6rem;
+    }
+
+    .section--spacing-md {
+        padding-top: 8rem;
+        padding-bottom: 8rem;
+    }
+
+    .section--spacing-lg {
+        padding-top: 10rem;
+        padding-bottom: 10rem;
+    }
+}
