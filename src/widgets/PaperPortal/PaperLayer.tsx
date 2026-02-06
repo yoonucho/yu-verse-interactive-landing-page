@@ -23,7 +23,7 @@ export function PaperLayer({
   const [hasBeenExpanded, setHasBeenExpanded] = useState(false);
   const { viewport } = useThree();
 
-  // 그룹 전체(종이+네온)에 애니메이션 적용 - hasBeenExpanded를 사용해 한 번 확장되면 유지
+  // 그룹 전체(종이+네온)에 애니메이션 적용 - hasBeenExpanded 사용 (한 번 확장되면 유지)
   usePortalAnimation(groupRef as any, {
     layerIndex,
     baseZ,
@@ -86,9 +86,9 @@ export function PaperLayer({
           color={color}
           roughness={1.0}
           metalness={0}
-          // [수정] 종이 자체가 빛나지 않게 하여 파스텔 색감을 복구합니다.
+          // 별 레이어가 확장되면 더 밝게 빛남
           emissive={new THREE.Color(color)}
-          emissiveIntensity={0.01}
+          emissiveIntensity={hasBeenExpanded ? 0.3 : 0.01}
           transparent
         />
       </mesh>

@@ -56,7 +56,7 @@ export function PortalScene() {
         size: 0.04 + Math.random() * 0.06,
         color: Math.random() < 0.7 ? "#ffffff" : "#ffe6a0",
         opacity: 0.6 + Math.random() * 0.4,
-        twinkleSpeed: 0.5 + Math.random() * 2, // 반짝임 속도 (0.5~2.5)
+        twinkleSpeed: 1.0 + Math.random() * 3, // 반짝임 속도 더 빠르게 (1.0~4.0)
         twinkleOffset: Math.random() * Math.PI * 2, // 시작 위상 랜덤
       });
     }
@@ -70,14 +70,10 @@ export function PortalScene() {
       dpr={[1, 2]}
       shadows
     >
-      {/* 배경색을 아주 어두운 남색/검정으로 설정해 포탈의 깊이감을 살립니다 */}
-      <color attach="background" args={["#050508"]} />
+      {/* 배경색을 어두운 보라색으로 설정 - 신비로운 우주 느낌 */}
+      <color attach="background" args={["#1a1a3e"]} />
 
       <PerspectiveCamera makeDefault position={[0, 0, 25]} fov={50} />
-
-      {/* 조명은 너무 세지 않게! */}
-      <ambientLight intensity={0.4} />
-      <pointLight position={[10, 10, 10]} intensity={0.5} />
 
       <OrbitControls
         enableZoom={false}
@@ -85,13 +81,14 @@ export function PortalScene() {
         enableRotate={false}
       />
 
-      {/* 조명 설정 - 자연스러운 음영 */}
-      <ambientLight intensity={0.6} />
+      {/* 조명 설정 - 성능 최적화 (핵심 조명만 유지) */}
+      <ambientLight intensity={0.4} color="#2a2a4e" />
 
-      {/* 메인 DirectionalLight - 부드러운 그림자 */}
+      {/* 메인 DirectionalLight - 전체 조명 */}
       <directionalLight
         position={[0, 10, 5]}
-        intensity={0.8}
+        intensity={0.7}
+        color="#d4d0ff"
         castShadow
         shadow-mapSize-width={2048}
         shadow-mapSize-height={2048}
@@ -102,34 +99,61 @@ export function PortalScene() {
         shadow-camera-bottom={-12}
         shadow-bias={-0.0005}
       />
-      <pointLight position={[-10, 5, 5]} intensity={0.3} color="#FFC8DD" />
-      <pointLight position={[10, -5, 5]} intensity={0.3} color="#BDE0FE" />
 
-      {/* 캐릭터 입체감을 위한 측면 상단 조명 */}
-      <spotLight
-        position={[3, 4, 3]}
-        angle={0.5}
-        penumbra={0.8}
-        intensity={0.8}
-        color="#ffffff"
-        target-position={[0, 0, 0]}
-      />
-      <spotLight
-        position={[-3, 4, 3]}
-        angle={0.5}
-        penumbra={0.8}
-        intensity={0.5}
-        color="#FFC8DD"
-        target-position={[0, 0, 0]}
-      />
-
-      {/* 캐릭터 전용 강한 정면 상단 조명 */}
+      {/* 별 구멍 테두리 조명 - 핵심 4개만 (성능 최적화) */}
       <pointLight
-        position={[0, 2, 5]}
-        intensity={1.5}
-        color="#ffffff"
+        position={[2, 0, -2]}
+        intensity={3.0}
+        color="#ffb088"
         distance={10}
-        decay={2}
+      />
+      <pointLight
+        position={[-2, 0, -2]}
+        intensity={3.0}
+        color="#ffd6a5"
+        distance={10}
+      />
+      <pointLight
+        position={[0, 2, -2]}
+        intensity={3.0}
+        color="#ffe0b8"
+        distance={10}
+      />
+      <pointLight
+        position={[0, -2, -2]}
+        intensity={3.0}
+        color="#ffc8a0"
+        distance={10}
+      />
+
+      {/* 별 구멍 안쪽 깊이 조명 - 2개만 */}
+      <pointLight
+        position={[0, 0, -10]}
+        intensity={2.0}
+        color="#ffb088"
+        distance={20}
+      />
+      <pointLight
+        position={[0, 0, -15]}
+        intensity={1.5}
+        color="#ffa07a"
+        distance={25}
+      />
+
+      {/* 캐릭터 림 라이트 - 2개만 */}
+      <spotLight
+        position={[-8, 5, 8]}
+        angle={0.3}
+        penumbra={1}
+        intensity={0.5}
+        color="#ff10f0"
+      />
+      <spotLight
+        position={[8, 5, 8]}
+        angle={0.3}
+        penumbra={1}
+        intensity={0.5}
+        color="#d4d0ff"
       />
 
       <Suspense fallback={null}>
@@ -167,19 +191,17 @@ export function PortalScene() {
         <Character isExpanded={isExpanded} />
       </Suspense>
 
-      {/* Bloom 효과 - 강력한 네온 발광 */}
+      {/* Bloom 효과 - 별 구멍 테두리만 빛나게 */}
       <EffectComposer>
         <Bloom
-          // [강도 조절] 빛이 얼마나 강하게 퍼질지 결정합니다. 1.5 ~ 2.0 사이 추천
-          intensity={0.8}
-          // [반경 조절] 빛이 얼마나 넓게 퍼질지 결정합니다.
-          // 레퍼런스처럼 부드러운 오오라 느낌을 내려면 이 값을 키워보세요 (0.5 ~ 0.8)
-          radius={0.3}
-          // [임계값] 이 값보다 밝은 부분만 빛나게 합니다.
-          // 캐릭터 본체는 안 빛나고 테두리만 빛나게 하는 핵심 설정입니다.
-          luminanceThreshold={1.2}
-          //Smoothing을 낮춰서 빛의 번짐 경계를 더 명확하게 잡습니다.
-          luminanceSmoothing={0.1}
+          // [강도 조절] 빛이 얼마나 강하게 퍼질지 결정합니다
+          intensity={1.2}
+          // [반경 조절] 빛이 얼마나 넓게 퍼질지 결정합니다
+          radius={0.5}
+          // [임계값] 이 값보다 밝은 부분만 빛나게 - 캐릭터는 제외
+          luminanceThreshold={1.5}
+          // Smoothing으로 빛의 번짐을 부드럽게
+          luminanceSmoothing={0.2}
           mipmapBlur
         />
       </EffectComposer>
