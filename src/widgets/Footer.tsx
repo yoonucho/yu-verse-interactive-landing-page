@@ -1,4 +1,4 @@
-import { Container, Section, ASSETS } from "../shared";
+import { Container, Section, ASSETS, Typography, Button } from "../shared";
 import { Mail } from "lucide-react";
 import styles from "./Footer.module.css";
 
@@ -45,21 +45,35 @@ export function Footer() {
 
         <Container>
           <div className={styles.content}>
-            <h2 id="footer-title" className={styles.title}>
+            <Typography
+              variant="h2"
+              id="footer-title"
+              className="section-title"
+              style={{
+                background:
+                  "linear-gradient(135deg, #fff 0%, rgba(255, 255, 255, 0.7) 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
               Signal
-            </h2>
-            <p className={styles.description}>
+            </Typography>
+            <Typography
+              as="p"
+              className="text-[1.125rem] md:text-[1.25rem] text-text-secondary leading-relaxed mb-10"
+            >
               I'm always ready to connect. <br />
               Let's create digital experiences that hearts and technology
               exchange.
-            </p>
-            <button
-              type="button"
+            </Typography>
+            <Button
+              variant="brand"
+              size="large"
               className={styles.btnExplore}
               onClick={handleExplore}
             >
               LET'S CONNECT
-            </button>
+            </Button>
           </div>
         </Container>
       </Section>
@@ -73,9 +87,9 @@ export function Footer() {
                 alt="YU Verse"
                 className={styles.logoImg}
               />
-              <p className={styles.copyright}>
+              <Typography variant="caption" className={styles.copyright}>
                 © {currentYear} YU verse. All rights reserved.
-              </p>
+              </Typography>
             </div>
             <div className={styles.socialLinks}>
               <a

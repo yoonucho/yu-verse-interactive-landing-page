@@ -3,7 +3,9 @@
 @theme {
   /* YU Verse Design System Colors */
   --color-navy-dark: #12122d;
+  --color-navy-darker: #080816;
   --color-purple-accent: #53469c;
+  --color-lavender-accent: #d4d0ff;
   --color-white: #ffffff;
 
   /* Tailwind 호환 색상 */
@@ -33,23 +35,30 @@
   --color-ring: hsl(248 36% 45%);
 
   /* Border Radius - YU Verse 스타일 */
-  --radius-sm: 0.8rem;
-  --radius-md: 2rem;
-  --radius-lg: 4rem;
+  --radius-sm: 0.5rem;
+  --radius-md: 1.25rem;
+  --radius-lg: 2.5rem;
   /* 버튼용 높은 radius */
 
-  /* Typography Scale (rem 기반) */
-  --font-size-xs: 1.2rem;
-  --font-size-sm: 1.4rem;
-  --font-size-base: 1.8rem;
-  --font-size-lg: 2.4rem;
-  --font-size-xl: 3rem;
-  --font-size-2xl: 4.8rem;
+  /* Typography Scale (rem 기반, 1rem = 16px) */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-sm: 0.875rem; /* 14px */
+  --font-size-base: 1.125rem; /* 18px */
+  --font-size-md: 1.25rem; /* 20px - 섹션 서브타이틀 */
+  --font-size-lg: 1.5rem; /* 24px */
+  --font-size-xl: 1.875rem; /* 30px */
+  --font-size-2xl: 3rem; /* 48px */
   /* H2 헤드라인 */
 
-  /* Font Families */
-  --font-family-base:
-    "Lato", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  /* Logo Sizes */
+  --logo-height-header: 1.8rem;
+  --logo-height-mobile: 1.5rem;
+  --logo-height-footer: 2rem; /* 32px */
+  --font-size-logo: 1rem;
+
+  /* Layout Specifics */
+  --header-height: 7.3125rem; /* 117px */
+  --section-signal-min-height: 31.25rem; /* 500px */
 }
 
 @layer base {
@@ -140,6 +149,25 @@
   /* 문단 기본 간격 */
   p {
     margin: 0;
+  }
+}
+
+@layer components {
+  /* 섹션 타이틀 공통 스타일 */
+  .section-title {
+    font-size: var(--font-size-2xl); /* 48px */
+    font-weight: 900;
+    line-height: 1.3;
+    margin-bottom: 1.5rem;
+  }
+
+  /* 섹션 서브타이틀 공통 스타일 */
+  .section-subtitle {
+    font-size: var(
+      --font-size-md
+    ); /* 20px - Typography body 스타일 오버라이드 */
+    line-height: 1.6;
+    margin-bottom: 2.5rem;
   }
 }
 
