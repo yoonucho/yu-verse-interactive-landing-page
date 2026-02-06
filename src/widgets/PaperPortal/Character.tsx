@@ -2,8 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useFrame, useThree } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
-import characterImage from "../../assets/yoonu-full.png";
-import characterBackImage from "../../assets/yoonu-back.png";
+import { ASSETS } from "../../shared/constants";
 
 interface CharacterProps {
   isExpanded: boolean;
@@ -16,8 +15,8 @@ export function Character({ isExpanded }: CharacterProps) {
   const shadowRef = useRef<THREE.Mesh>(null);
   const { viewport } = useThree();
   const [hasAppeared, setHasAppeared] = useState(false);
-  const texture = useTexture(characterImage);
-  const backTexture = useTexture(characterBackImage);
+  const texture = useTexture(ASSETS.IMAGES.YOONU_FULL);
+  const backTexture = useTexture(ASSETS.IMAGES.YOONU_BACK);
 
   // 텍스처 품질 설정
   texture.anisotropy = 16;
