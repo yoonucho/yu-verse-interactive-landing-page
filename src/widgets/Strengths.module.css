@@ -1,0 +1,173 @@
+.textContent {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.description {
+  font-size: 1.125rem;
+  /* 18px */
+  line-height: 1.6;
+  color: var(--color-navy-dark);
+  opacity: 0.8;
+}
+
+.btnLearnMore {
+  align-self: flex-start;
+  padding: 1rem 2.5rem;
+  background-color: var(--color-purple-accent);
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-radius: 2.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btnLearnMore:hover {
+  background-color: var(--color-navy-dark);
+  transform: translateY(-2px);
+}
+
+.lifeScience {
+  overflow: hidden;
+  /* 가로 스크롤 방지 */
+}
+
+.imageContainer {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  /* 텍스트보다 위에 표시 */
+  /* overflow: hidden 제거하여 원자가 박스 밖으로 나갈 수 있게 함 */
+}
+
+.placeholder {
+  font-size: 1.125rem;
+  color: var(--color-navy-dark);
+  opacity: 0.5;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+  /* 48px */
+  font-weight: 900;
+  line-height: 1.3;
+  color: var(--color-navy-dark);
+  margin-bottom: 1rem;
+}
+
+.subtitle {
+  font-size: 1.25rem;
+  /* 20px */
+  line-height: 1.6;
+  color: var(--color-navy-dark);
+  opacity: 0.7;
+}
+
+.content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  /* 96px */
+  align-items: center;
+}
+
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2.5rem;
+  /* 40px */
+}
+
+.card {
+  background: white;
+  border: 1px solid rgba(18, 18, 45, 0.1);
+  border-radius: 0.75rem;
+  padding: 2.5rem 2rem;
+  transition: all 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(18, 18, 45, 0.12);
+}
+
+.cardIcon {
+  width: 4rem;
+  /* 64px */
+  height: 4rem;
+  background: linear-gradient(
+    135deg,
+    var(--color-purple-accent) 0%,
+    var(--color-navy-dark) 100%
+  );
+  border-radius: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 2rem;
+}
+
+.cardTitle {
+  font-size: 1.5rem;
+  /* 24px */
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--color-navy-dark);
+  margin-bottom: 1rem;
+}
+
+.cardDescription {
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--color-navy-dark);
+  opacity: 0.7;
+  margin-bottom: 1.5rem;
+}
+
+.cardLink {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--color-purple-accent);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.cardLink:hover {
+  color: var(--color-navy-dark);
+}
+
+/* 반응형 */
+@media (max-width: 1024px) {
+  .cardsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .cardsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .title {
+    font-size: 2.25rem;
+    /* 36px */
+  }
+
+  .header {
+    margin-bottom: 3rem;
+  }
+}
