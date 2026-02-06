@@ -80,15 +80,23 @@ export function PaperLayer({
         castShadow
         receiveShadow
       >
-        <meshStandardMaterial
-          color={color}
-          roughness={1.0}
-          metalness={0}
-          // 별 레이어가 확장되면 더 밝게 빛남
-          emissive={new THREE.Color(color)}
-          emissiveIntensity={shouldExpand ? 0.3 : 0.01}
-          transparent
-        />
+        {/* 첫 번째 레이어: 확장 전에는 배경색, 확장 후에는 라벤더 */}
+        {layerIndex === 0 && !shouldExpand ? (
+          <meshBasicMaterial color={color} />
+        ) : (
+          <meshStandardMaterial
+            color={layerIndex === 0 && shouldExpand ? "#d4d0ff" : color}
+            roughness={1.0}
+            metalness={0}
+            emissive={
+              new THREE.Color(
+                layerIndex === 0 && shouldExpand ? "#d4d0ff" : color,
+              )
+            }
+            emissiveIntensity={shouldExpand ? 0.3 : 0.01}
+            transparent
+          />
+        )}
       </mesh>
 
       {/* [2] 별 모양 네온 테두리 (확장 시에만) */}

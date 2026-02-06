@@ -23,9 +23,9 @@ export function PortalScene() {
   );
   const [isAnimating, setIsAnimating] = useState(false);
 
-  // 파스텔 색상 팔레트
+  // 파스텔 색상 팔레트 (첫 번째 레이어는 배경색과 동일)
   const pastelColors = [
-    "#FFC8DD", // 핑크
+    "#12122d", // 배경색과 동일 (투명 효과)
     "#FFAFCC", // 연핑크
     "#BDE0FE", // 하늘
     "#A2D2FF", // 라벤더블루
@@ -128,7 +128,7 @@ export function PortalScene() {
       shadows
     >
       {/* 배경색을 어두운 보라색으로 설정 - 신비로운 우주 느낌 */}
-      <color attach="background" args={["#1a1a3e"]} />
+      <color attach="background" args={["#12122d"]} />
 
       <PerspectiveCamera makeDefault position={[0, 0, 25]} fov={50} />
 
@@ -232,10 +232,9 @@ export function PortalScene() {
           <PaperLayer
             key={index}
             layerIndex={index}
-            // 간격을 확 벌려야 터널처럼 보입니다 (0.5 -> 2.5)
             baseZ={-index * 2.5}
             color={layer.color}
-            scale={1} // 애니메이션 훅에서 조절되도록 1로 고정
+            scale={1}
             rotation={0}
             shouldExpand={layerExpandStates[index]}
             onExpand={handleClick}
