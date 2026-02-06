@@ -1,5 +1,5 @@
-import { useRef, useState } from "react";
-import { Container, Section } from "../../shared";
+import { useRef } from "react";
+import { Container, Section, Typography, Button } from "../../shared";
 import { PaperPortal } from "../PaperPortal";
 import styles from "./Hero.module.css";
 
@@ -15,21 +15,33 @@ export function Hero() {
       variant="dark"
       spacing="lg"
       className={styles.hero}
-      id="platform"
+      id="origin"
       aria-labelledby="hero-title"
     >
       <Container>
         <div className={styles.content} ref={containerRef}>
           {/* 왼쪽: 텍스트 컨텐츠 */}
           <div className={styles.textContent}>
-            <h1 id="hero-title" className={styles.heroTitle}>
-              Accelerating Therapeutic Discovery
-            </h1>
-            <p className={styles.heroSubtitle}>
-              Transform drug discovery with our cutting-edge digital chemistry
-              platform. Leverage computational power to design better molecules
-              faster.
-            </p>
+            <Typography
+              variant="h2"
+              id="hero-title"
+              className="section-title"
+              style={{ color: "var(--color-white)" }}
+            >
+              Finding Warmth in the Digital Universe
+            </Typography>
+            <Typography
+              as="p"
+              className="text-[1.125rem] md:text-[1.25rem] text-text-secondary leading-relaxed mb-10"
+            >
+              Technology can be cold, but interaction should be warm. I carve
+              out windows of 'Value' in the vast digital space. This YU verse
+              was co-piloted by AI to bridge the gap between imagination and
+              reality.
+            </Typography>
+            <Button variant="brand" size="large" className={styles.heroCta}>
+              DISCOVER MORE
+            </Button>
           </div>
 
           {/* 비주얼 요소이므로 스크린 리더에서 무시 */}
