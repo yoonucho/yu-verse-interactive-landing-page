@@ -60,7 +60,9 @@ export function Footer() {
             </Typography>
             <Typography
               as="p"
-              className="text-[1.125rem] md:text-[1.25rem] text-text-secondary leading-relaxed mb-10"
+              variant={null}
+              className="section-subtitle"
+              style={{ color: "rgba(255, 255, 255, 0.9)" }}
             >
               I'm always ready to connect. <br />
               Let's create digital experiences that hearts and technology

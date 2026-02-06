@@ -32,7 +32,9 @@ export function Hero() {
             </Typography>
             <Typography
               as="p"
-              className="text-[1.125rem] md:text-[1.25rem] text-text-secondary leading-relaxed mb-10"
+              variant={null}
+              className="section-subtitle"
+              style={{ color: "rgba(255, 255, 255, 0.9)" }}
             >
               Technology can be cold, but interaction should be warm. I carve
               out windows of 'Value' in the vast digital space. This YU verse
