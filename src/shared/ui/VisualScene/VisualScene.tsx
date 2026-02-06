@@ -56,9 +56,10 @@ export function VisualScene({
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
+          preserveDrawingBuffer: true, // 컨텍스트 소실 방지에 도움
         }}
-        dpr={[1, 1.5]}
-        eventSource={containerRef.current as HTMLElement}
+        dpr={[1, 2]} // 성능과 품질 밸런스 조정
+        eventSource={containerRef.current || undefined}
         style={{
           position: "absolute",
           top: "-50%",
