@@ -1,6 +1,14 @@
 import { useState, useRef, useCallback } from "react";
 import { Network, ShieldCheck, Heart, Anchor, Brain } from "lucide-react";
-import { cn, Container, Section, VisualScene, Typography } from "../shared";
+import {
+  cn,
+  Container,
+  Section,
+  VisualScene,
+  Typography,
+  Skeleton,
+} from "../shared";
+import { useInView } from "../shared/hooks";
 import styles from "./Strengths.module.css";
 
 /**
@@ -8,6 +16,7 @@ import styles from "./Strengths.module.css";
  * 5개 카드 그리드: 연결성, 책임, 공감, 신념, 지적 사고
  */
 export function Strengths() {
+  const { ref: sceneRef, isVisible } = useInView({ threshold: 0.3 });
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [clickedIndex, setClickedIndex] = useState<number | null>(null);
   const cardRefs = useRef<(HTMLElement | null)[]>([]);
@@ -106,13 +115,21 @@ export function Strengths() {
           </div>
 
           {/* 3D 이미지 영역 (비주얼 요소) */}
-          <div className={styles.imageContainer} aria-hidden="true">
-            <VisualScene
-              type="protein"
-              color="#4e54c8"
-              onHover={setHoveredIndex}
-              onClickSphere={handleSphereClick}
-            />
+          <div
+            ref={sceneRef}
+            className={styles.imageContainer}
+            aria-hidden="true"
+          >
+            {isVisible ? (
+              <VisualScene
+                type="protein"
+                color="#4e54c8"
+                onHover={setHoveredIndex}
+                onClickSphere={handleSphereClick}
+              />
+            ) : (
+              <Skeleton variant="rect" />
+            )}
           </div>
         </div>
       </Container>
