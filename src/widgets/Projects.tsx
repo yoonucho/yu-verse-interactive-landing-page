@@ -1,5 +1,5 @@
 import { Container, Section, Typography } from "../shared";
-import { useIntersectionObserver } from "../shared/hooks/useIntersectionObserver";
+import { useInView } from "../shared/hooks";
 import { ProjectCard } from "./ProjectCard";
 import styles from "./Projects.module.css";
 
@@ -8,7 +8,7 @@ import styles from "./Projects.module.css";
  * 5개 프로젝트 카드 그리드 - 3D 플립 카드
  */
 export function Projects() {
-  const { ref, isVisible } = useIntersectionObserver({ threshold: 0.1 });
+  const { ref, isVisible } = useInView({ threshold: 0.1 });
 
   const projects = [
     {
