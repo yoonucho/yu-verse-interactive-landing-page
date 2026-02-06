@@ -29,9 +29,6 @@ export function usePortalAnimation(
     scale: { current: 1 },
   });
 
-  // 탄성 애니메이션을 위한 속도 ref
-  const velocityRef = useRef({ z: 0, rotation: 0, scale: 0 });
-
   // 순차적 시작 시간 제거 - 모두 동시에 부드럽게 확장
   const animationProgressRef = useRef(0);
 

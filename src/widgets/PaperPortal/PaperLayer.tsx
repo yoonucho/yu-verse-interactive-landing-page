@@ -1,4 +1,4 @@
-import { useRef, useMemo, useState } from "react";
+import { useRef, useMemo } from "react";
 import * as THREE from "three";
 import { useThree } from "@react-three/fiber";
 import { usePortalAnimation } from "./usePortalAnimation";

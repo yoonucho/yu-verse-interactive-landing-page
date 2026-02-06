@@ -27,7 +27,6 @@ export function Character({ isExpanded }: CharacterProps) {
   const opacityRef = useRef(0);
   const startTimeRef = useRef<number | null>(null);
   const animationTypeRef = useRef<number>(0); // 0: jump, 1: rotate, 2: flip
-  const disappearAnimationTypeRef = useRef<number>(0); // 사라질 때 애니메이션 타입
   const isDisappearingRef = useRef(false);
 
   // 틸트 효과를 위한 ref
