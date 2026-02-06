@@ -10,6 +10,7 @@ interface CharacterProps {
 }
 
 export function Character({ isExpanded }: CharacterProps) {
+  const groupRef = useRef<THREE.Group>(null); // 부모 그룹 ref
   const meshRef = useRef<THREE.Mesh>(null);
   const glowRef = useRef<THREE.Mesh>(null);
   const shadowRef = useRef<THREE.Mesh>(null);
@@ -29,6 +30,9 @@ export function Character({ isExpanded }: CharacterProps) {
   const animationTypeRef = useRef<number>(0); // 0: jump, 1: rotate, 2: flip
   const disappearAnimationTypeRef = useRef<number>(0); // 사라질 때 애니메이션 타입
   const isDisappearingRef = useRef(false);
+
+  // 틸트 효과를 위한 ref
+  const tiltRef = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     if (isExpanded) {
@@ -263,7 +267,7 @@ export function Character({ isExpanded }: CharacterProps) {
   const imageAspect = 500 / 631;
 
   return (
-    <>
+    <group ref={groupRef}>
       {/* 그림자 (타원형) */}
       <mesh
         ref={shadowRef}
@@ -306,6 +310,6 @@ export function Character({ isExpanded }: CharacterProps) {
           side={THREE.DoubleSide}
         />
       </mesh>
-    </>
+    </group>
   );
 }
