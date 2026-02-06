@@ -53,7 +53,42 @@ export function Character({ isExpanded }: CharacterProps) {
   }, [isExpanded]);
 
   useFrame((state) => {
-    if (!meshRef.current || !glowRef.current || !shadowRef.current) return;
+    if (
+      !meshRef.current ||
+      !glowRef.current ||
+      !shadowRef.current ||
+      !groupRef.current
+    )
+      return;
+
+    // === 마우스 틸트 효과 ===
+    const maxTilt = 0.15; // 최대 기울기 (라디안)
+
+    if (isDisappearingRef.current) {
+      // 사라지는 중일 때는 틸트를 서서히 0으로
+      tiltRef.current.x = THREE.MathUtils.lerp(tiltRef.current.x, 0, 0.1);
+      tiltRef.current.y = THREE.MathUtils.lerp(tiltRef.current.y, 0, 0.1);
+    } else if (hasAppeared) {
+      // 나타난 상태일 때만 마우스 따라가기
+      const targetTiltX = -state.mouse.y * maxTilt;
+      const targetTiltY = state.mouse.x * maxTilt;
+
+      // 부드럽게 보간 (lerp factor: 0.05 = 매우 부드러움)
+      tiltRef.current.x = THREE.MathUtils.lerp(
+        tiltRef.current.x,
+        targetTiltX,
+        0.05,
+      );
+      tiltRef.current.y = THREE.MathUtils.lerp(
+        tiltRef.current.y,
+        targetTiltY,
+        0.05,
+      );
+    }
+
+    // 그룹에 틸트 적용 (기존 개별 회전은 유지)
+    groupRef.current.rotation.x = tiltRef.current.x;
+    groupRef.current.rotation.y = tiltRef.current.y;
 
     // 사라지는 중일 때 - 뒤돌아서 앞으로 걸어가기
     if (isDisappearingRef.current) {
