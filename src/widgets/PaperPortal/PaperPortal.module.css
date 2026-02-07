@@ -97,3 +97,26 @@
 .closeButton:hover .starIcon {
   animation: spin 2s linear infinite;
 }
+
+@media (max-width: 768px) {
+  .closeButton {
+    left: 16px;
+    bottom: 16px;
+  }
+
+  .starIcon {
+    font-size: 36px;
+  }
+
+  .closeText {
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 375px) {
+  .closeButton {
+    left: auto;
+    right: 16px;
+    bottom: 16px;
+  }
+}

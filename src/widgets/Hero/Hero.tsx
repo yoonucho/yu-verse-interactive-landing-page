@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Container, Section, Typography, Button } from "../../shared";
+import { Container, Section, Typography } from "../../shared";
 import { PaperPortal } from "../PaperPortal";
 import styles from "./Hero.module.css";
 

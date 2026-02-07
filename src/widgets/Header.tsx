@@ -8,7 +8,7 @@ import {
   Button,
   LINKS,
 } from "../shared";
-import { SquareArrowOutUpRight } from "lucide-react";
+import { SquareArrowOutUpRight, Menu, X } from "lucide-react";
 import styles from "./Header.module.css";
 
 /**
@@ -18,6 +18,7 @@ import styles from "./Header.module.css";
 export function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isGlowing, setIsGlowing] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   const throttledScroll = useMemo(
     () =>
@@ -69,6 +70,7 @@ export function Header() {
 
   const handleNavClick = (e: React.MouseEvent, id: string) => {
     e.preventDefault();
+    setIsMobileMenuOpen(false);
     const element = document.getElementById(id);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -136,8 +138,51 @@ export function Header() {
               <SquareArrowOutUpRight size={16} strokeWidth={2} />
             </Button>
           </div>
+
+          {/* Mobile Menu Toggle */}
+          <button
+            className={styles.mobileToggle}
+            onClick={() => setIsMobileMenuOpen((prev) => !prev)}
+            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-expanded={isMobileMenuOpen}
+          >
+            {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
       </Container>
+
+      {/* Mobile Menu Panel */}
+      {isMobileMenuOpen && (
+        <div className={styles.mobileMenu}>
+          <nav aria-label="Mobile Navigation">
+            <ul className={styles.mobileNavList}>
+              {navItems.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    className={`${styles.mobileNavLink} ${activeSectionId === item.id ? styles.active : ""}`}
+                    onClick={(e) => handleNavClick(e, item.id)}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </nav>
+          <Button
+            variant="brand"
+            size="medium"
+            onClick={() => {
+              setIsMobileMenuOpen(false);
+              handleCtaClick();
+            }}
+            className={`${styles.mobileCta} gap-2`}
+          >
+            NOTION PORTFOLIO
+            <SquareArrowOutUpRight size={16} strokeWidth={2} />
+          </Button>
+        </div>
+      )}
     </header>
   );
 }

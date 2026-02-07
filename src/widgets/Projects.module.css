@@ -21,6 +21,10 @@
 }
 
 @media (max-width: 768px) {
+  .header {
+    margin-bottom: 2.5rem;
+  }
+
   .projectGrid {
     grid-template-columns: 1fr;
     gap: 1.5rem;

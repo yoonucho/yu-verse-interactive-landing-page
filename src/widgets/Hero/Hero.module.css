@@ -18,12 +18,13 @@
 .textContent {
   position: relative;
   z-index: 10;
+  min-width: 300px;
 }
 
 .sceneContainer {
   position: relative;
-  width: 600px;
-  height: 600px;
+  width: min(600px, 50vw);
+  height: min(600px, 50vw);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -48,9 +49,29 @@
 }
 
 /* 반응형 */
+@media (max-width: 1024px) {
+  .sceneContainer {
+    width: min(400px, 45vw);
+    height: min(400px, 45vw);
+  }
+}
+
 @media (max-width: 768px) {
   .content {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+    text-align: center;
+  }
+
+  .sceneContainer {
+    width: min(400px, 80vw);
+    height: min(400px, 80vw);
+    margin: 0 auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero {
+    min-height: 50vh;
   }
 }

@@ -4,6 +4,11 @@
   gap: 2rem;
 }
 
+.header {
+  min-width: 300px;
+  max-width: 400px;
+}
+
 /* 섹션 전체 다크 배경 - 우주적 그라데이션 */
 .strengths {
   background: linear-gradient(
@@ -95,8 +100,8 @@
 .content {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 6rem;
   align-items: center;
+  gap: 6rem;
 }
 
 .cardsGrid {
@@ -215,18 +220,52 @@
 }
 
 /* 반응형 */
+
+@media (max-width: 1280px) {
+  .content {
+    gap: 0;
+  }
+}
+
 @media (max-width: 1024px) {
+  .content {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  .header {
+    max-width: 100%;
+  }
+
+  .imageContainer {
+    width: 400px;
+    height: 400px;
+    margin: 0 auto;
+  }
+
   .cardsGrid {
     grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
   }
 }
 
 @media (max-width: 640px) {
   .cardsGrid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .card {
+    padding: 2rem 1.5rem;
+  }
+
+  .imageContainer {
+    width: 280px;
+    height: 280px;
   }
 
   .header {
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
+    text-align: center;
   }
 }

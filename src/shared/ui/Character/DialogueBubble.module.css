@@ -59,3 +59,9 @@
   color: #ffbf00;
   font-weight: 700;
 }
+
+@media (max-width: 375px) {
+  .bubble {
+    display: none;
+  }
+}
