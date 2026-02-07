@@ -1,5 +1,6 @@
 import { Html } from "@react-three/drei";
 import { useEffect, useState } from "react";
+import { ArrowRight } from "lucide-react";
 import styles from "./DialogueBubble.module.css";
 
 interface DialogueBubbleProps {
@@ -111,7 +112,9 @@ export function DialogueBubble({
         {showNextHint &&
           displayedText.replace(/<[^>]*>/g, "").length ===
             text.replace(/<[^>]*>/g, "").length && (
-            <div className={styles.nextHint}>Click Next ➔</div>
+            <div className={styles.nextHint}>
+              Click Next <ArrowRight size={14} />
+            </div>
           )}
       </div>
     </Html>

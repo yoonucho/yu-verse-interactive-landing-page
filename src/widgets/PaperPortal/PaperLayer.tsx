@@ -73,9 +73,15 @@ export function PaperLayer({
       <mesh
         geometry={paperGeo}
         onClick={() => {
-          onExpand?.();
+          if (!shouldExpand) {
+            onExpand?.();
+          }
         }}
-        onPointerEnter={() => (document.body.style.cursor = "pointer")}
+        onPointerEnter={() => {
+          if (!shouldExpand) {
+            document.body.style.cursor = "pointer";
+          }
+        }}
         onPointerLeave={() => (document.body.style.cursor = "auto")}
         castShadow
         receiveShadow
