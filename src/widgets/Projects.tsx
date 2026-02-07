@@ -1,4 +1,4 @@
-import { Container, Section, Typography } from "../shared";
+import { Container, Section, Typography, LINKS } from "../shared";
 import { useInView } from "../shared/hooks";
 import { ProjectCard } from "./ProjectCard";
 import styles from "./Projects.module.css";
@@ -18,7 +18,7 @@ export function Projects() {
       description:
         "Designing <strong>digital experiences</strong> that embrace the inner emotions of teenagers through <strong>emotion expression training</strong> games and school culture development.",
       color: { from: "#8B7BE8", to: "#53469C" },
-      link: "#",
+      link: LINKS.PROJECT01,
     },
     {
       id: 2,
@@ -27,7 +27,7 @@ export function Projects() {
       description:
         "Developing <strong>immersive educational content</strong> where children participate proactively through <strong>chatbots, storytelling</strong> and interactive quizzes.",
       color: { from: "#4A90E2", to: "#2E5C8A" },
-      link: "#",
+      link: LINKS.PROJECT02,
     },
     {
       id: 3,
@@ -36,23 +36,25 @@ export function Projects() {
       description:
         "Implementing <strong>interactive financial interfaces</strong> with 3D flip effects and <strong>delightful animations</strong> that bring joy to users.",
       color: { from: "#FFBF00", to: "#CC8800" },
-      link: "#",
+      link: LINKS.PROJECT03,
     },
     {
       id: 4,
-      title: "Project 04",
-      subtitle: "Coming Soon",
+      title: "YU Verse",
+      subtitle: "Interactive branding",
       description:
-        "A new <strong>constellation of value</strong> is forming. Stay tuned for more details about this exciting project.",
+        "Developing an <strong>immersive landing page</strong> that translates abstract values into interactive 3D experiences, bridging the gap between users and digital warmth.",
       color: { from: "#9B91E2", to: "#6B5FB3" },
+      link: LINKS.PROJECT04,
     },
     {
       id: 5,
-      title: "Project 05",
-      subtitle: "Coming Soon",
+      title: "Dopaminetto",
+      subtitle: "Developer community hub",
       description:
-        "Another <strong>meaningful journey</strong> is about to begin. More information will be revealed soon.",
+        "Established the <strong>automated development foundation</strong> using Husky and lint-staged while designing the <strong>FSD architecture</strong>. Crafted an <strong>empathetic Chat UX</strong> to restore community warmth after Gather.town.",
       color: { from: "#D4D0FF", to: "#A9A3E8" },
+      link: LINKS.PROJECT05,
     },
   ];
 

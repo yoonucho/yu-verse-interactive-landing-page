@@ -7,6 +7,7 @@ import {
   VisualScene,
   Typography,
   Skeleton,
+  LINKS,
 } from "../shared";
 import { useInView } from "../shared/hooks";
 import styles from "./Strengths.module.css";
@@ -48,46 +49,41 @@ export function Strengths() {
     }, 3000);
   }, []);
 
-  const handleCardClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    alert("준비중입니다 🚀");
-  };
-
   const cards = [
     {
       icon: <Network size={32} strokeWidth={1.5} />,
       title: "Connectedness",
       description:
         "I understand the organic flow of teams and projects, coordinating the relationships between people and processes.",
-      link: "Learn More",
+      link: LINKS.STRENGTHS,
     },
     {
       icon: <ShieldCheck size={32} strokeWidth={1.5} />,
       title: "Responsibility",
       description:
         "With trusted execution and accountability, I complete every task I take on to the end.",
-      link: "Learn More",
+      link: LINKS.STRENGTHS,
     },
     {
       icon: <Heart size={32} strokeWidth={1.5} />,
       title: "Empathy",
       description:
         "I intuitively understand others' emotions, designing warm, user-centered experiences.",
-      link: "Learn More",
+      link: LINKS.STRENGTHS,
     },
     {
       icon: <Anchor size={32} strokeWidth={1.5} />,
       title: "Belief",
       description:
         "I infuse all projects with a firm philosophy that 'people come before technology.'",
-      link: "Learn More",
+      link: LINKS.STRENGTHS,
     },
     {
       icon: <Brain size={32} strokeWidth={1.5} />,
       title: "Intellection",
       description:
         "Through deep thinking and reflection, I design architectures with logical foundations.",
-      link: "Learn More",
+      link: LINKS.STRENGTHS,
     },
   ];
 
@@ -169,8 +165,13 @@ export function Strengths() {
               >
                 {card.description}
               </Typography>
-              <a href="#" className={styles.cardLink} onClick={handleCardClick}>
-                {card.link} →
+              <a
+                href={card.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.cardLink}
+              >
+                Link
               </a>
             </article>
           ))}

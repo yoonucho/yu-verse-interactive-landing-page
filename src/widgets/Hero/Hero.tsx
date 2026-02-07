@@ -41,9 +41,6 @@ export function Hero() {
               was co-piloted by AI to bridge the gap between imagination and
               reality.
             </Typography>
-            <Button variant="brand" size="large" className={styles.heroCta}>
-              DISCOVER MORE
-            </Button>
           </div>
 
           {/* 비주얼 요소이므로 스크린 리더에서 무시 */}

@@ -99,6 +99,8 @@ export function ProjectCard({
           {link && (
             <a
               href={link}
+              target="_blank"
+              rel="noopener noreferrer"
               className={styles.projectLink}
               onClick={(e) => e.stopPropagation()}
             >

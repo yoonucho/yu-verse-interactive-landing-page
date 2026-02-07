@@ -1,4 +1,11 @@
-import { Container, Section, ASSETS, Typography, Button } from "../shared";
+import {
+  Container,
+  Section,
+  ASSETS,
+  Typography,
+  Button,
+  LINKS,
+} from "../shared";
 import { Mail } from "lucide-react";
 import styles from "./Footer.module.css";
 
@@ -28,7 +35,7 @@ const GithubIcon = ({ size = 20 }: { size?: number }) => (
  */
 export function Footer() {
   const handleExplore = () => {
-    alert("준비중입니다 🚀");
+    window.open(LINKS.EMAIL);
   };
 
   const currentYear = new Date().getFullYear();
@@ -95,7 +102,7 @@ export function Footer() {
             </div>
             <div className={styles.socialLinks}>
               <a
-                href="https://github.com"
+                href={LINKS.GITHUB}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.socialIcon}
@@ -104,7 +111,7 @@ export function Footer() {
                 <GithubIcon size={20} />
               </a>
               <a
-                href="mailto:contact@example.com"
+                href={LINKS.EMAIL}
                 className={styles.socialIcon}
                 aria-label="Email"
               >

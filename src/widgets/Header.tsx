@@ -6,7 +6,9 @@ import {
   throttle,
   Typography,
   Button,
+  LINKS,
 } from "../shared";
+import { SquareArrowOutUpRight } from "lucide-react";
 import styles from "./Header.module.css";
 
 /**
@@ -48,7 +50,7 @@ export function Header() {
   }, []);
 
   const handleCtaClick = () => {
-    alert("준비중입니다 🚀");
+    window.open(LINKS.CTA, "_blank", "noopener,noreferrer");
   };
 
   const navItems = [
@@ -127,10 +129,11 @@ export function Header() {
               variant="brand"
               size="medium"
               onClick={handleCtaClick}
-              className={styles.btnContact}
+              className={`${styles.btnContact} gap-2`}
               aria-label="Let's Connect"
             >
-              LET'S CONNECT
+              NOTION PORTFOLIO
+              <SquareArrowOutUpRight size={16} strokeWidth={2} />
             </Button>
           </div>
         </div>
