@@ -8,17 +8,20 @@ import { useEffect, useRef, useState } from "react";
 interface UseInViewOptions {
   threshold?: number;
   rootMargin?: string;
+  once?: boolean;
 }
 
 interface UseInViewReturn {
   ref: React.RefObject<HTMLDivElement | null>;
   isVisible: boolean;
+  hasBeenVisible: boolean;
 }
 
 export function useInView(options: UseInViewOptions = {}): UseInViewReturn {
-  const { threshold = 0.1, rootMargin = "0px" } = options;
+  const { threshold = 0.1, rootMargin = "0px", once = false } = options;
   const ref = useRef<HTMLDivElement>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [hasBeenVisible, setHasBeenVisible] = useState(false);
 
   useEffect(() => {
     const element = ref.current;
@@ -26,7 +29,13 @@ export function useInView(options: UseInViewOptions = {}): UseInViewReturn {
 
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          setHasBeenVisible(true);
+          if (once) observer.disconnect();
+        } else if (!once) {
+          setIsVisible(false);
+        }
       },
       { threshold, rootMargin },
     );
@@ -36,7 +45,7 @@ export function useInView(options: UseInViewOptions = {}): UseInViewReturn {
     return () => {
       observer.disconnect();
     };
-  }, [threshold, rootMargin]);
+  }, [threshold, rootMargin, once]);
 
-  return { ref, isVisible };
+  return { ref, isVisible, hasBeenVisible };
 }

@@ -31,6 +31,7 @@ function CameraRig() {
 type VisualSceneProps = {
   color?: string;
   type?: "protein" | "material";
+  paused?: boolean;
   onHover?: (index: number | null) => void;
   onClickSphere?: (index: number) => void;
 };
@@ -38,6 +39,7 @@ type VisualSceneProps = {
 export function VisualScene({
   color,
   type,
+  paused = false,
   onHover,
   onClickSphere,
 }: VisualSceneProps) {
@@ -50,6 +52,7 @@ export function VisualScene({
       aria-hidden="true"
     >
       <Canvas
+        frameloop={paused ? "demand" : "always"}
         gl={{
           alpha: true,
           powerPreference: "high-performance",

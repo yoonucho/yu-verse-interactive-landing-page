@@ -1,13 +1,10 @@
 import { lazy, Suspense } from "react";
-import { Header, Hero, SectionSkeleton } from "./widgets";
+import { Header, Hero, SectionSkeleton, Strengths } from "./widgets";
 import { ScrollToTop } from "./shared";
 
-// 섹션 레이지 로딩
+// 섹션 레이지 로딩 (Strengths는 3D Canvas 초기화 충돌 방지를 위해 즉시 로딩)
 const Projects = lazy(() =>
   import("./widgets/Projects").then((m) => ({ default: m.Projects })),
-);
-const Strengths = lazy(() =>
-  import("./widgets/Strengths").then((m) => ({ default: m.Strengths })),
 );
 const Footer = lazy(() =>
   import("./widgets/Footer").then((m) => ({ default: m.Footer })),
@@ -25,9 +22,7 @@ function App() {
           <Projects />
         </Suspense>
 
-        <Suspense fallback={<SectionSkeleton />}>
-          <Strengths />
-        </Suspense>
+        <Strengths />
       </main>
 
       <Suspense fallback={<SectionSkeleton />}>
