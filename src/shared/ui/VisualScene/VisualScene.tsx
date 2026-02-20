@@ -59,9 +59,8 @@ export function VisualScene({
           antialias: true,
           toneMapping: THREE.ACESFilmicToneMapping,
           toneMappingExposure: 1.2,
-          preserveDrawingBuffer: true, // 컨텍스트 소실 방지에 도움
         }}
-        dpr={[1, 2]} // 성능과 품질 밸런스 조정
+        dpr={[1, 1.5]} // 성능 우선 상한
         eventSource={containerRef.current || undefined}
         style={{
           position: "absolute",
@@ -84,7 +83,7 @@ export function VisualScene({
           <Stars
             radius={80}
             depth={60}
-            count={2000}
+            count={1200}
             factor={2}
             saturation={0.1}
             fade
