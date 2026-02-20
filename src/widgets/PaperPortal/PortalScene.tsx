@@ -153,7 +153,7 @@ export function PortalScene() {
   }, [layers]);
 
   // 별 좌표와 속성 생성 (밤하늘 효과)
-  const starCount = 50;
+  const starCount = 40;
   const starData = useMemo(() => {
     const arr = [];
     for (let i = 0; i < starCount; i++) {
@@ -180,7 +180,7 @@ export function PortalScene() {
         className={styles.canvas}
         style={{ pointerEvents: isClosing ? "none" : "auto" }}
         gl={{ alpha: true, antialias: true }}
-        dpr={[1, 2]}
+        dpr={[1, 1.5]}
         shadows
       >
         {/* 배경색을 어두운 보라색으로 설정 - 신비로운 우주 느낌 */}
@@ -310,9 +310,9 @@ export function PortalScene() {
         <EffectComposer>
           <Bloom
             // [강도 조절] 빛이 얼마나 강하게 퍼질지 결정합니다
-            intensity={1.2}
+            intensity={0.9}
             // [반경 조절] 빛이 얼마나 넓게 퍼질지 결정합니다
-            radius={0.5}
+            radius={0.4}
             // [임계값] 이 값보다 밝은 부분만 빛나게 - 캐릭터는 제외
             luminanceThreshold={1.5}
             // Smoothing으로 빛의 번짐을 부드럽게
