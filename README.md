@@ -1,7 +1,7 @@
-# YU Verse | Interactive Portfolio Landing
+# YU Verse | Interactive Portfolio Page
 
-따뜻한 기술로 사람과 디지털을 잇는 인터랙티브 포트폴리오 랜딩 페이지입니다. <br>
-React Three Fiber로 만든 3D 경험과 감성적 UX 위에 YU Verse라는 작은 세계를 담았습니다.
+React Three Fiber 기반 3D 인터랙티브 포트폴리오 페이지입니다.
+사용자의 마우스·터치 입력에 반응하는 인터랙션, 섹션별 시각적 전환, 재사용 가능한 UI 컴포넌트 구조를 통해 웹에서 탐색 가능한 포트폴리오 경험을 구현했습니다.
 
 ## Demo
 
