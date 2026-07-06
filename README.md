@@ -112,4 +112,4 @@ src/
 - **Framework**: React 19 + TypeScript
 - **3D**: React Three Fiber, Drei, Postprocessing
 - **Build**: Vite
-- **Styling**: TailwindCSS, Shacdn UI, CSS Modules,
+- **Styling**: TailwindCSS, shadcn/ui, CSS Modules,
