@@ -1,9 +1,9 @@
 import { Header, Hero, Projects, Strengths, Footer } from "./widgets";
-import { ScrollToTop } from "./shared";
+import { LanguageProvider, ScrollToTop } from "./shared";
 
 function App() {
   return (
-    <>
+    <LanguageProvider>
       <Header />
 
       <main role="main">
@@ -15,7 +15,7 @@ function App() {
       <Footer />
 
       <ScrollToTop />
-    </>
+    </LanguageProvider>
   );
 }
 

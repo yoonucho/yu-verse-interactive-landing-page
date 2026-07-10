@@ -14,6 +14,8 @@ interface DialogueBubbleProps {
   onClick?: () => void;
   /** 다음 대사 힌트 표시 여부 */
   showNextHint?: boolean;
+  /** 다음 대사 힌트 라벨 */
+  nextHintLabel: string;
 }
 
 /**
@@ -26,6 +28,7 @@ export function DialogueBubble({
   position = [0, 8, 0],
   onClick,
   showNextHint = true,
+  nextHintLabel,
 }: DialogueBubbleProps) {
   const [displayedText, setDisplayedText] = useState("");
   const typingSpeed = 30; // ms per char
@@ -113,7 +116,7 @@ export function DialogueBubble({
           displayedText.replace(/<[^>]*>/g, "").length ===
             text.replace(/<[^>]*>/g, "").length && (
             <div className={styles.nextHint}>
-              Click Next <ArrowRight size={14} />
+              {nextHintLabel} <ArrowRight size={14} />
             </div>
           )}
       </div>

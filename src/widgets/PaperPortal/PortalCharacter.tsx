@@ -12,7 +12,7 @@ import { useCharacterAnimation } from "../../shared/hooks/useCharacterAnimation"
 import { useCharacterTilt } from "../../shared/hooks/useCharacterTilt";
 import { useDialogueState } from "../../shared/hooks/useDialogueState";
 import { throttle } from "../../shared/lib";
-import guideData from "../../shared/ui/guide.json";
+import { useLanguage } from "../../shared/i18n";
 
 interface PortalCharacterProps {
   isExpanded: boolean;
@@ -28,6 +28,7 @@ export const PortalCharacter = forwardRef<
   PortalCharacterHandle,
   PortalCharacterProps
 >(({ isExpanded, isClosing, onClose }, ref) => {
+  const { t } = useLanguage();
   const groupRef = useRef<THREE.Group>(null);
 
   /** goodbye 시퀀스 진행 중 잠금 (클릭 충돌 방지) */
@@ -54,7 +55,7 @@ export const PortalCharacter = forwardRef<
   // 3. 대사 Hook
   const { currentDialogue, nextDialogue, jumpToId, setDialogueIndex } =
     useDialogueState({
-      dialogues: guideData.dialogues,
+      dialogues: t.guide.dialogues,
     });
 
   // 포털이 열릴 때 대사 초기화 및 goodbye 잠금 해제
@@ -142,6 +143,7 @@ export const PortalCharacter = forwardRef<
       dialogueText={currentDialogue.text}
       onNext={handleInteraction}
       showNextHint={currentDialogue.id !== "goodbye"}
+      nextHintLabel={t.dialogue.nextHint}
     />
   );
 });

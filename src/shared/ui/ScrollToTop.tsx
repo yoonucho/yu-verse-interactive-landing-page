@@ -2,12 +2,14 @@ import { useState, useEffect, useMemo } from 'react';
 import { ArrowUp } from 'lucide-react';
 import styles from './ScrollToTop.module.css';
 import { throttle } from '../lib/throttle';
+import { useLanguage } from '../i18n';
 
 /**
  * Scroll To Top Button Component
  * 스크롤이 일정 이상 내려가면 나타나고, 클릭 시 최상단으로 부드럽게 이동합니다.
  */
 export function ScrollToTop() {
+    const { t } = useLanguage();
     const [isVisible, setIsVisible] = useState(false);
 
     // 스크롤 감지 핸들러
@@ -40,7 +42,7 @@ export function ScrollToTop() {
                 type="button"
                 onClick={scrollToTop}
                 className={styles.button}
-                aria-label="Scroll to top"
+                aria-label={t.scrollToTop.ariaLabel}
             >
                 <ArrowUp className={styles.icon} />
             </button>

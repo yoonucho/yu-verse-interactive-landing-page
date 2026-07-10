@@ -67,6 +67,7 @@
     font-size: 1.125rem;
     /* 18px (16px 기준) */
     line-height: 1.6;
+    word-break: keep-all;
     color: var(--color-navy-dark);
     background-color: var(--color-white);
     margin: 0;

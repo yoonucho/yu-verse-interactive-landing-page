@@ -197,26 +197,18 @@
   font-size: var(--font-size-base);
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1.5rem;
+  margin-bottom: 0;
 }
 
-.cardLink {
-  position: absolute;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  display: inline-flex;
-  align-items: center;
-  font-size: 0.9rem;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.9);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-  transition: color 0.2s ease;
-  z-index: 2;
+.strengthsActions {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
-.cardLink:hover {
-  color: #ffd700;
+.strengthsCta {
+  gap: 0.5rem;
+  white-space: nowrap;
 }
 
 /* 반응형 */
@@ -257,6 +249,10 @@
 
   .card {
     padding: 2rem 1.5rem;
+  }
+
+  .strengthsCta {
+    width: 100%;
   }
 
   .imageContainer {

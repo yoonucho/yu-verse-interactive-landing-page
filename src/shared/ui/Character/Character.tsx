@@ -23,6 +23,8 @@ export interface CharacterProps {
   onNext: () => void;
   /** 다음 힌트 표시 여부 */
   showNextHint?: boolean;
+  /** 다음 힌트 라벨 */
+  nextHintLabel: string;
 }
 
 export function Character({
@@ -31,6 +33,7 @@ export function Character({
   dialogueText,
   onNext,
   showNextHint = true,
+  nextHintLabel,
 }: CharacterProps) {
   const { viewport } = useThree();
 
@@ -65,6 +68,7 @@ export function Character({
         position={[-2 + characterSize * 0.85, characterSize * 0.6, 0]}
         onClick={onNext}
         showNextHint={showNextHint}
+        nextHintLabel={nextHintLabel}
       />
     </group>
   );
