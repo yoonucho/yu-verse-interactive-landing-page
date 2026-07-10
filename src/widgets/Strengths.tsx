@@ -1,6 +1,14 @@
 import { useState, useRef, useCallback } from "react";
-import { Network, ShieldCheck, Heart, Anchor, Brain } from "lucide-react";
 import {
+  Network,
+  ShieldCheck,
+  Heart,
+  Anchor,
+  Brain,
+  SquareArrowOutUpRight,
+} from "lucide-react";
+import {
+  Button,
   cn,
   Container,
   Section,
@@ -8,6 +16,7 @@ import {
   Typography,
   Skeleton,
   LINKS,
+  useLanguage,
 } from "../shared";
 import { useInView } from "../shared/hooks";
 import styles from "./Strengths.module.css";
@@ -17,6 +26,7 @@ import styles from "./Strengths.module.css";
  * 5개 카드 그리드: 연결성, 책임, 공감, 신념, 지적 사고
  */
 export function Strengths() {
+  const { t } = useLanguage();
   const {
     ref: sceneRef,
     isVisible,
@@ -49,43 +59,18 @@ export function Strengths() {
     }, 3000);
   }, []);
 
-  const cards = [
-    {
-      icon: <Network size={32} strokeWidth={1.5} />,
-      title: "Connectedness",
-      description:
-        "I understand the organic flow of teams and projects, coordinating the relationships between people and processes.",
-      link: LINKS.STRENGTHS,
-    },
-    {
-      icon: <ShieldCheck size={32} strokeWidth={1.5} />,
-      title: "Responsibility",
-      description:
-        "With trusted execution and accountability, I complete every task I take on to the end.",
-      link: LINKS.STRENGTHS,
-    },
-    {
-      icon: <Heart size={32} strokeWidth={1.5} />,
-      title: "Empathy",
-      description:
-        "I intuitively understand others' emotions, designing warm, user-centered experiences.",
-      link: LINKS.STRENGTHS,
-    },
-    {
-      icon: <Anchor size={32} strokeWidth={1.5} />,
-      title: "Belief",
-      description:
-        "I infuse all projects with a firm philosophy that 'people come before technology.'",
-      link: LINKS.STRENGTHS,
-    },
-    {
-      icon: <Brain size={32} strokeWidth={1.5} />,
-      title: "Intellection",
-      description:
-        "Through deep thinking and reflection, I design architectures with logical foundations.",
-      link: LINKS.STRENGTHS,
-    },
+  const cardIcons = [
+    <Network size={32} strokeWidth={1.5} />,
+    <ShieldCheck size={32} strokeWidth={1.5} />,
+    <Heart size={32} strokeWidth={1.5} />,
+    <Anchor size={32} strokeWidth={1.5} />,
+    <Brain size={32} strokeWidth={1.5} />,
   ];
+
+  const cards = t.strengths.items.map((card, index) => ({
+    ...card,
+    icon: cardIcons[index],
+  }));
 
   return (
     <Section
@@ -105,15 +90,14 @@ export function Strengths() {
               id="edu-title"
               className="section-title text-white opacity-80"
             >
-              The 5 Sources of Warmth
+              {t.strengths.title}
             </Typography>
             <Typography
               as="p"
               variant={null}
               className="section-subtitle text-white/90"
             >
-              My strengths that create meaningful connections in the digital
-              space
+              {t.strengths.subtitle}
             </Typography>
           </div>
 
@@ -165,16 +149,29 @@ export function Strengths() {
               >
                 {card.description}
               </Typography>
-              <a
-                href={card.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.cardLink}
-              >
-                Link
-              </a>
             </article>
           ))}
+        </div>
+        <div className={styles.strengthsActions}>
+          <Button
+            asChild
+            variant="brand"
+            size="large"
+            className={styles.strengthsCta}
+          >
+            <a
+              href={LINKS.STRENGTHS}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {t.strengths.cta}
+              <SquareArrowOutUpRight
+                size={16}
+                strokeWidth={2}
+                aria-hidden="true"
+              />
+            </a>
+          </Button>
         </div>
       </Container>
     </Section>

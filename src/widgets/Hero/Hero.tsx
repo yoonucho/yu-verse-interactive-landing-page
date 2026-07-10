@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { Container, Section, Typography } from "../../shared";
+import { Container, Section, Typography, useLanguage } from "../../shared";
 import { PaperPortal } from "../PaperPortal";
 import styles from "./Hero.module.css";
 
@@ -8,6 +8,7 @@ import styles from "./Hero.module.css";
  * YU Verse 디자인: 다크 배경, 큰 헤드라인, 오른쪽에 3D 모델
  */
 export function Hero() {
+  const { t } = useLanguage();
   const containerRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -28,7 +29,7 @@ export function Hero() {
               className="section-title"
               style={{ color: "var(--color-white)" }}
             >
-              Finding Warmth in the Digital Universe
+              {t.hero.title}
             </Typography>
             <Typography
               as="p"
@@ -36,10 +37,7 @@ export function Hero() {
               className="section-subtitle"
               style={{ color: "rgba(255, 255, 255, 0.9)" }}
             >
-              Technology can be cold, but interaction should be warm. I carve
-              out windows of 'Value' in the vast digital space. This YU verse
-              was co-piloted by AI to bridge the gap between imagination and
-              reality.
+              {t.hero.subtitle}
             </Typography>
           </div>
 

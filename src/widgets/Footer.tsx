@@ -5,8 +5,9 @@ import {
   Typography,
   Button,
   LINKS,
+  useLanguage,
 } from "../shared";
-import { Mail } from "lucide-react";
+import { Mail, SquareArrowOutUpRight } from "lucide-react";
 import styles from "./Footer.module.css";
 
 /**
@@ -34,8 +35,9 @@ const GithubIcon = ({ size = 20 }: { size?: number }) => (
  * 'Signal' 컨셉: 임팩트 있는 중앙 텍스트와 심플한 푸터 구성
  */
 export function Footer() {
+  const { t } = useLanguage();
   const handleExplore = () => {
-    window.open(LINKS.EMAIL);
+    window.open(LINKS.PORTFOLIO, "_blank", "noopener,noreferrer");
   };
 
   const currentYear = new Date().getFullYear();
@@ -63,7 +65,7 @@ export function Footer() {
                 WebkitTextFillColor: "transparent",
               }}
             >
-              Signal
+              {t.footer.title}
             </Typography>
             <Typography
               as="p"
@@ -71,17 +73,16 @@ export function Footer() {
               className="section-subtitle"
               style={{ color: "rgba(255, 255, 255, 0.9)" }}
             >
-              I'm always ready to connect. <br />
-              Let's create digital experiences that hearts and technology
-              exchange.
+              {t.footer.subtitle}
             </Typography>
             <Button
               variant="brand"
               size="large"
-              className={styles.btnExplore}
+              className={`${styles.btnExplore} gap-2`}
               onClick={handleExplore}
             >
-              LET'S CONNECT
+              {t.footer.cta}
+              <SquareArrowOutUpRight size={18} strokeWidth={2} />
             </Button>
           </div>
         </Container>

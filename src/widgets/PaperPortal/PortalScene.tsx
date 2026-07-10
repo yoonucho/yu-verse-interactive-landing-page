@@ -10,6 +10,7 @@ import { PaperLayer } from "./PaperLayer";
 import { PortalCharacter } from "./PortalCharacter";
 import { Star } from "./Star";
 import { throttle } from "../../shared/lib";
+import { useLanguage } from "../../shared/i18n";
 import styles from "./PaperPortal.module.css";
 
 /**
@@ -17,6 +18,7 @@ import styles from "./PaperPortal.module.css";
  * 10개 레이어를 Z축으로 촘촘하게 배치 (귀여운 팝업북 스타일)
  */
 export function PortalScene() {
+  const { t } = useLanguage();
   const [isExpanded, setIsExpanded] = useState(false);
   const [hasBeenExpanded, setHasBeenExpanded] = useState(false);
   const [layerExpandStates, setLayerExpandStates] = useState<boolean[]>(
@@ -341,9 +343,9 @@ export function PortalScene() {
               executeCloseSequence();
             }
           }}
-          aria-label="채팅 종료"
+          aria-label={t.portal.closeChatAria}
         >
-          <span className={styles.closeText}>Close Chat</span>
+          <span className={styles.closeText}>{t.portal.closeChat}</span>
           <span className={styles.starIcon}>★</span>
         </button>
       )}

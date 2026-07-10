@@ -23,6 +23,8 @@ interface ProjectCardProps {
   subtitle: string;
   description: string;
   link?: string;
+  linkLabel: string;
+  ariaLabel: string;
   color: {
     from: string;
     to: string;
@@ -36,6 +38,8 @@ export function ProjectCard({
   subtitle,
   description,
   link,
+  linkLabel,
+  ariaLabel,
   color,
   isVisible,
 }: ProjectCardProps) {
@@ -71,7 +75,7 @@ export function ProjectCard({
           handleClick();
         }
       }}
-      aria-label={`${title} 프로젝트 카드`}
+      aria-label={ariaLabel}
     >
       <div className={cn(styles.cardFlipper, { [styles.flipped]: isFlipped })}>
         {/* 앞면 */}
@@ -104,7 +108,7 @@ export function ProjectCard({
               className={styles.projectLink}
               onClick={(e) => e.stopPropagation()}
             >
-              View Details
+              {linkLabel}
             </a>
           )}
         </div>

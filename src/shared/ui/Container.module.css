@@ -1,7 +1,6 @@
 .container {
     width: 100%;
-    max-width: 157.4rem;
-    /* 1574px */
+    max-width: 1920px;
     margin: 0 auto;
     padding-left: 10rem;
     /* 100px */
@@ -10,6 +9,13 @@
 }
 
 /* 반응형 패딩 */
+@media (max-width: 1600px) {
+    .container {
+        padding-left: 6rem;
+        padding-right: 6rem;
+    }
+}
+
 @media (max-width: 1024px) {
     .container {
         padding-left: 4rem;

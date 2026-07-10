@@ -8,7 +8,7 @@ interface Dialogue {
 }
 
 interface UseDialogueStateProps {
-  dialogues: Dialogue[];
+  dialogues: readonly Dialogue[];
 }
 
 export function useDialogueState({ dialogues }: UseDialogueStateProps) {

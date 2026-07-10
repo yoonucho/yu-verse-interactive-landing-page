@@ -7,6 +7,8 @@ import {
   Typography,
   Button,
   LINKS,
+  LanguageToggle,
+  useLanguage,
 } from "../shared";
 import { SquareArrowOutUpRight, Menu, X } from "lucide-react";
 import styles from "./Header.module.css";
@@ -16,6 +18,7 @@ import styles from "./Header.module.css";
  * 높이 117px, sticky 헤더
  */
 export function Header() {
+  const { t } = useLanguage();
   const [isScrolled, setIsScrolled] = useState(false);
   const [isGlowing, setIsGlowing] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -89,7 +92,7 @@ export function Header() {
               href="/"
               onClick={handleLogoClick}
               className={styles.logoLink}
-              aria-label="YU Verse Home"
+              aria-label={t.header.homeLabel}
             >
               <img
                 src={ASSETS.IMAGES.LOGO}
@@ -103,7 +106,7 @@ export function Header() {
           </div>
 
           {/* Navigation */}
-          <nav className={styles.nav} aria-label="Main Navigation">
+          <nav className={styles.nav} aria-label={t.header.mainNavigationLabel}>
             <ul className={styles.navList}>
               {navItems.map((item) => (
                 <li key={item.id}>
@@ -132,18 +135,21 @@ export function Header() {
               size="medium"
               onClick={handleCtaClick}
               className={`${styles.btnContact} gap-2`}
-              aria-label="Let's Connect"
+              aria-label={t.header.connectLabel}
             >
-              NOTION PORTFOLIO
+              {t.header.cta}
               <SquareArrowOutUpRight size={16} strokeWidth={2} />
             </Button>
+            <LanguageToggle />
           </div>
 
           {/* Mobile Menu Toggle */}
           <button
             className={styles.mobileToggle}
             onClick={() => setIsMobileMenuOpen((prev) => !prev)}
-            aria-label={isMobileMenuOpen ? "Close menu" : "Open menu"}
+            aria-label={
+              isMobileMenuOpen ? t.header.closeMenu : t.header.openMenu
+            }
             aria-expanded={isMobileMenuOpen}
           >
             {isMobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
@@ -154,33 +160,40 @@ export function Header() {
       {/* Mobile Menu Panel */}
       {isMobileMenuOpen && (
         <div className={styles.mobileMenu}>
-          <nav aria-label="Mobile Navigation">
-            <ul className={styles.mobileNavList}>
-              {navItems.map((item) => (
-                <li key={item.id}>
-                  <a
-                    href={`#${item.id}`}
-                    className={`${styles.mobileNavLink} ${activeSectionId === item.id ? styles.active : ""}`}
-                    onClick={(e) => handleNavClick(e, item.id)}
-                  >
-                    {item.label}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </nav>
-          <Button
-            variant="brand"
-            size="medium"
-            onClick={() => {
-              setIsMobileMenuOpen(false);
-              handleCtaClick();
-            }}
-            className={`${styles.mobileCta} gap-2`}
-          >
-            NOTION PORTFOLIO
-            <SquareArrowOutUpRight size={16} strokeWidth={2} />
-          </Button>
+          <Container>
+            <div className={styles.mobileMenuContent}>
+              <nav aria-label={t.header.mobileNavigationLabel}>
+                <ul className={styles.mobileNavList}>
+                  {navItems.map((item) => (
+                    <li key={item.id}>
+                      <a
+                        href={`#${item.id}`}
+                        className={`${styles.mobileNavLink} ${activeSectionId === item.id ? styles.active : ""}`}
+                        onClick={(e) => handleNavClick(e, item.id)}
+                      >
+                        {item.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+              <div className={styles.mobileActions}>
+                <LanguageToggle variant="menu" />
+                <Button
+                  variant="brand"
+                  size="medium"
+                  onClick={() => {
+                    setIsMobileMenuOpen(false);
+                    handleCtaClick();
+                  }}
+                  className={`${styles.mobileCta} gap-2`}
+                >
+                  {t.header.cta}
+                  <SquareArrowOutUpRight size={16} strokeWidth={2} />
+                </Button>
+              </div>
+            </div>
+          </Container>
         </div>
       )}
     </header>

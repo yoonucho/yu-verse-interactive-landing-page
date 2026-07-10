@@ -11,8 +11,10 @@ export const LINKS = {
     "https://www.notion.so/tomorrowcho/0bc8d10633b2481c88bb49ea293d193f?source=copy_link#daba296b9d6d4fa290c072f644e52b8a",
   PROJECT03:
     "https://www.notion.so/tomorrowcho/0bc8d10633b2481c88bb49ea293d193f?source=copy_link#0efc6cddb5ba48c5a88c564146e8cdb8",
-  PROJECT04: "https://github.com/yoonucho/yu-verse-interactive-landing-page",
-  PROJECT05: "https://github.com/seoyoonyi/dopaminetto",
+  PROJECT04:
+    "https://www.notion.so/tomorrowcho/0bc8d10633b2481c88bb49ea293d193f?source=copy_link#2281c66258d4803492ced0df3a5a0510",
+  PROJECT05:
+    "https://www.notion.so/tomorrowcho/0bc8d10633b2481c88bb49ea293d193f?source=copy_link#34e1c66258d480539dcce28141d8134a",
   STRENGTHS:
     "https://www.notion.so/tomorrowcho/0bc8d10633b2481c88bb49ea293d193f?source=copy_link#28c1c66258d480d18e5eddcb1ef7d66d",
   GITHUB: "https://github.com/yoonucho",
