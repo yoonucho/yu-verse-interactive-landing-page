@@ -116,6 +116,7 @@ export const translations = {
       cta: "NOTION PORTFOLIO",
     },
     portal: {
+      openHint: "Click me",
       closeChat: "대화 닫기",
       closeChatAria: "채팅 종료",
     },
@@ -182,11 +183,12 @@ export const translations = {
     hero: {
       title: "Finding Warmth in the Digital Universe",
       subtitle:
-        "Technology can be cold, but interaction should be warm. I carve out windows of 'Value' in the vast digital space. This YU verse was co-piloted by AI to bridge the gap between imagination and reality.",
+        "I build interactive web experiences that make complex ideas easier to understand and use. With React, Three.js, and AI-assisted workflows, I turn early ideas into responsive, working interfaces.",
     },
     projects: {
       title: "Selected Constellations of Value",
-      subtitle: "Projects where warmth and technology meet",
+      subtitle:
+        "Selected work across platform migration, interactive learning, responsive UI, calendar systems, and real-time community experiences.",
       viewDetails: "VIEW DETAILS",
       cardAriaLabel: "project card",
       items: [
@@ -194,74 +196,75 @@ export const translations = {
           title: "Youth Suicide Prevention Campaign",
           subtitle: "Nuxt3 Migration",
           description:
-            "Improved campaign operations through a Nuxt3 migration and focused UX updates.",
+            "Migrated a youth suicide prevention campaign to Nuxt 3 and refined key UX flows for more reliable campaign operations.",
         },
         {
           title: "Digital Citizenship & Environmental Education",
           subtitle: "Learning Content",
           description:
-            "Built quiz templates and interactive learning UI for richer classroom sessions.",
+            "Created reusable quiz templates and participatory learning UI for digital citizenship and environmental education.",
         },
         {
           title: "Art Co-ownership Platform",
           subtitle: "Responsive UX",
           description:
-            "Built responsive UI and 3D card interactions for an art co-ownership platform.",
+            "Implemented responsive interfaces and 3D card interactions for an art co-ownership platform.",
         },
         {
           title: "YU Calendar",
           subtitle: "Calendar UI",
           description:
-            "Built a calendar UI with holiday API integration and FullCalendar.",
+            "Built a scheduling interface with public holiday API integration and FullCalendar.",
         },
         {
           title: PROJECT_NAMES.dopaminetto,
           subtitle: "Community MVP",
           description:
-            "Built a community MVP with live presence, chat, and voice broadcasting.",
+            "Built a community MVP with real-time presence, chat, and voice broadcasting.",
         },
       ],
     },
     strengths: {
       title: "The 5 Sources of Warmth",
       subtitle:
-        "My strengths that create meaningful connections in the digital space",
+        "Five strengths I apply when defining problems, collaborating, and building maintainable interfaces.",
       cta: "VIEW CORE SOURCES",
       items: [
         {
           title: "Connectedness",
           description:
-            "I understand the organic flow of teams and projects, coordinating the relationships between people and processes.",
+            "I map relationships between people, schedules, and features to keep work moving as one coherent flow.",
         },
         {
           title: "Responsibility",
           description:
-            "With trusted execution and accountability, I complete every task I take on to the end.",
+            "I clarify what I own, follow through on decisions, and carry implementation to completion.",
         },
         {
           title: "Empathy",
           description:
-            "I intuitively understand others' emotions, designing warm, user-centered experiences.",
+            "I consider the user's situation and emotional load when shaping interactions and content.",
         },
         {
           title: "Belief",
           description:
-            "I infuse all projects with a firm philosophy that 'people come before technology.'",
+            "I evaluate technology through the user's problem and context before choosing an implementation.",
         },
         {
           title: "Intellection",
           description:
-            "Through deep thinking and reflection, I design architectures with logical foundations.",
+            "I clarify why a solution should exist, then structure it so the next change remains manageable.",
         },
       ],
     },
     footer: {
       title: "Signal",
       subtitle:
-        "View detailed project work and outcomes in my Notion portfolio.",
+        "For detailed process notes and project outcomes, visit my Notion portfolio.",
       cta: "NOTION PORTFOLIO",
     },
     portal: {
+      openHint: "Click me",
       closeChat: "Close Chat",
       closeChatAria: "Close chat",
     },
@@ -276,27 +279,27 @@ export const translations = {
       dialogues: [
         {
           id: "welcome",
-          text: "Welcome! I'm your guide to finding warmth in this digital universe. 😊",
+          text: "Welcome! I'll give you a quick tour of this portfolio. 👋",
         },
         {
           id: "gnb_guide",
-          text: "The top menu is our compass. You can find projects in <span class='highlight'>Constellations</span>, my 5 strengths in <span class='highlight'>Sources</span>, and connect with me in <span class='highlight'>Signal</span>.",
+          text: "Use the top navigation to jump between sections. <span class='highlight'>Constellations</span> covers projects, <span class='highlight'>Core Sources</span> explains how I work, and <span class='highlight'>Signal</span> links to detailed work.",
           action: "highlight_gnb",
           motion: "look_up",
         },
         {
           id: "humanity",
-          text: "We often feel technology is cold, but there's always a person behind it. Shall we discover that warmth together?",
+          text: "This site combines 3D interaction with a concise overview of my work. Take your time and explore.",
           motion: "nod",
         },
         {
           id: "start",
-          text: "Click a menu item or scroll down slowly to begin our journey! 🌌✨",
+          text: "Choose a section from the menu or scroll to continue. ✨",
           motion: "nod",
         },
         {
           id: "goodbye",
-          text: "See you around! 👋",
+          text: "Thanks for visiting. 👋",
           action: "close_portal",
         },
       ],

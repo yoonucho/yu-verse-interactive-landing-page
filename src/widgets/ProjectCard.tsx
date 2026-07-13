@@ -59,8 +59,8 @@ export function ProjectCard({
   // 앞면 스타일 - 서브타이틀 컬러
   const frontStyle = {
     "--subtitle-color": color.from,
-    "--subtitle-color-transparent": `${color.from}40`,
-    "--subtitle-glow": `${color.from}60`,
+    "--neon-color": color.from,
+    "--neon-rgb": hexToRgb(color.from),
   } as React.CSSProperties;
 
   return (

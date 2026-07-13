@@ -3,6 +3,8 @@ import * as THREE from "three";
 import { useFrame, useThree } from "@react-three/fiber";
 import { Text } from "@react-three/drei";
 import { useWheelScaleOnRef } from "../../hooks/useWheelScale";
+import { STRENGTH_COLORS } from "../../constants";
+import { COLORS } from "../../constants/design-system";
 
 /**
  * Molecule 컴포넌트
@@ -21,11 +23,19 @@ type MoleculeProps = {
 };
 
 const STRENGTHS = [
-  { name: "Connectedness", position: [0, 0, 0], color: "#C8A2C8" },
-  { name: "Responsibility", position: [1.3, 1.1, 0], color: "#E8C8A0" },
-  { name: "Empathy", position: [-1.3, 1.1, 0], color: "#A8D8DC" },
-  { name: "Belief", position: [1.3, -1.1, 0], color: "#F0C8A0" },
-  { name: "Intellection", position: [-1.3, -1.1, 0], color: "#B8C8E0" },
+  { name: "Connectedness", position: [0, 0, 0], color: STRENGTH_COLORS[0] },
+  {
+    name: "Responsibility",
+    position: [1.3, 1.1, 0],
+    color: STRENGTH_COLORS[1],
+  },
+  { name: "Empathy", position: [-1.3, 1.1, 0], color: STRENGTH_COLORS[2] },
+  { name: "Belief", position: [1.3, -1.1, 0], color: STRENGTH_COLORS[3] },
+  {
+    name: "Intellection",
+    position: [-1.3, -1.1, 0],
+    color: STRENGTH_COLORS[4],
+  },
 ] as const;
 
 // ─── Liquid Light (흐르는 빛) 설정 ───
@@ -552,12 +562,12 @@ export function Molecule({
               <Text
                 position={[0, radius + 0.25, 0]}
                 fontSize={0.12}
-                color="#E0D8CC"
+                color={strength.color}
                 anchorX="center"
                 anchorY="middle"
                 outlineWidth={0.008}
-                outlineColor="#FFC860"
-                outlineOpacity={0.4}
+                outlineColor={COLORS.NAVY_DARK}
+                outlineOpacity={0.75}
                 letterSpacing={0.15}
                 maxWidth={2}
               >

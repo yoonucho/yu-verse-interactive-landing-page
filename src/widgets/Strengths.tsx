@@ -16,6 +16,7 @@ import {
   Typography,
   Skeleton,
   LINKS,
+  STRENGTH_COLORS,
   useLanguage,
 } from "../shared";
 import { useInView } from "../shared/hooks";
@@ -70,6 +71,7 @@ export function Strengths() {
   const cards = t.strengths.items.map((card, index) => ({
     ...card,
     icon: cardIcons[index],
+    color: STRENGTH_COLORS[index],
   }));
 
   return (
@@ -132,6 +134,7 @@ export function Strengths() {
                 cardRefs.current[index] = el;
               }}
               className={`${styles.card} ${hoveredIndex === index ? styles.cardActive : ""} ${clickedIndex === index ? styles.cardClicked : ""}`}
+              style={{ "--strength-color": card.color } as React.CSSProperties}
               role="listitem"
             >
               <div className={styles.cardIcon} aria-hidden="true">
@@ -159,11 +162,7 @@ export function Strengths() {
             size="large"
             className={styles.strengthsCta}
           >
-            <a
-              href={LINKS.STRENGTHS}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
+            <a href={LINKS.STRENGTHS} target="_blank" rel="noopener noreferrer">
               {t.strengths.cta}
               <SquareArrowOutUpRight
                 size={16}

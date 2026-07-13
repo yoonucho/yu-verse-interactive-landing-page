@@ -49,9 +49,6 @@ export function Footer() {
         className={styles.signalSection}
         aria-labelledby="footer-title"
       >
-        {/* 배경 오버레이 */}
-        <div className={styles.backgroundOverlay} aria-hidden="true" />
-
         <Container>
           <div className={styles.content}>
             <Typography
