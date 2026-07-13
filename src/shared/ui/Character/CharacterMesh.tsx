@@ -6,10 +6,11 @@ interface CharacterMeshProps {
   size: number;
   imageAspect: number;
   onClick: () => void;
+  onHoverChange?: (isHovered: boolean) => void;
 }
 
 export const CharacterMesh = forwardRef<THREE.Mesh, CharacterMeshProps>(
-  ({ texture, size, imageAspect, onClick }, ref) => {
+  ({ texture, size, imageAspect, onClick, onHoverChange }, ref) => {
     return (
       <mesh
         ref={ref}
@@ -18,8 +19,14 @@ export const CharacterMesh = forwardRef<THREE.Mesh, CharacterMeshProps>(
           e.stopPropagation();
           onClick();
         }}
-        onPointerOver={() => (document.body.style.cursor = "pointer")}
-        onPointerOut={() => (document.body.style.cursor = "auto")}
+        onPointerOver={() => {
+          document.body.style.cursor = "pointer";
+          onHoverChange?.(true);
+        }}
+        onPointerOut={() => {
+          document.body.style.cursor = "auto";
+          onHoverChange?.(false);
+        }}
       >
         <planeGeometry args={[size, size / imageAspect]} />
         <meshBasicMaterial
