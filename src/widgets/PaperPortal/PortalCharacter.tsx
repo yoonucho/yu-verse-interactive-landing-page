@@ -5,6 +5,7 @@ import {
   useImperativeHandle,
   useMemo,
   useCallback,
+  useState,
 } from "react";
 import * as THREE from "three";
 import { Character } from "../../shared/ui/Character/Character";
@@ -18,6 +19,8 @@ interface PortalCharacterProps {
   isExpanded: boolean;
   isClosing?: boolean;
   onClose?: () => void;
+  onInitialClick?: () => void;
+  onHoverChange?: (isHovered: boolean) => void;
 }
 
 export interface PortalCharacterHandle {
@@ -27,9 +30,28 @@ export interface PortalCharacterHandle {
 export const PortalCharacter = forwardRef<
   PortalCharacterHandle,
   PortalCharacterProps
->(({ isExpanded, isClosing, onClose }, ref) => {
+>(function PortalCharacter(
+  { isExpanded, isClosing, onClose, onInitialClick, onHoverChange },
+  ref,
+) {
   const { t } = useLanguage();
   const groupRef = useRef<THREE.Group>(null);
+  const [isMobile, setIsMobile] = useState(() =>
+    typeof window !== "undefined"
+      ? window.matchMedia("(max-width: 768px)").matches
+      : false,
+  );
+
+  useEffect(() => {
+    const query = window.matchMedia("(max-width: 768px)");
+    const handleChange = (event: MediaQueryListEvent) => {
+      setIsMobile(event.matches);
+    };
+
+    setIsMobile(query.matches);
+    query.addEventListener("change", handleChange);
+    return () => query.removeEventListener("change", handleChange);
+  }, []);
 
   /** goodbye 시퀀스 진행 중 잠금 (클릭 충돌 방지) */
   const isGoodbyeSequenceRef = useRef(false);
@@ -64,7 +86,7 @@ export const PortalCharacter = forwardRef<
       setDialogueIndex(0);
       isGoodbyeSequenceRef.current = false; // 새로 열릴 때 잠금 해제
     }
-  }, [isExpanded, setDialogueIndex]);
+  }, [isExpanded, isMobile, setDialogueIndex]);
 
   // 외부에서 호출 가능한 메서드 노출
   useImperativeHandle(ref, () => ({
@@ -118,8 +140,21 @@ export const PortalCharacter = forwardRef<
     if (isClosing) return; // 닫힘 중 클릭 무시
     if (isGoodbyeSequenceRef.current) return; // goodbye 중 클릭 무시
     triggerJump();
+
+    if (isMobile) {
+      jumpToId(currentDialogue.id === "welcome" ? "start" : "goodbye");
+      return;
+    }
+
     nextDialogue();
-  }, [isClosing, triggerJump, nextDialogue]);
+  }, [
+    isClosing,
+    isMobile,
+    currentDialogue.id,
+    jumpToId,
+    triggerJump,
+    nextDialogue,
+  ]);
 
   // throttle 적용된 인터랙션 핸들러 (300ms 간격 제한)
   const handleInteraction = useMemo(
@@ -142,6 +177,8 @@ export const PortalCharacter = forwardRef<
       groupRef={groupRef}
       dialogueText={currentDialogue.text}
       onNext={handleInteraction}
+      onInitialClick={onInitialClick}
+      onHoverChange={onHoverChange}
       showNextHint={currentDialogue.id !== "goodbye"}
       nextHintLabel={t.dialogue.nextHint}
     />

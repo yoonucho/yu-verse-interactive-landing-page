@@ -22,20 +22,6 @@
   );
 }
 
-.backgroundOverlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(
-    circle at center,
-    rgba(83, 70, 156, 0.1) 0%,
-    transparent 70%
-  );
-  pointer-events: none;
-}
-
 .content {
   position: relative;
   z-index: 2;

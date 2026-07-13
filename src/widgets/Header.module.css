@@ -167,7 +167,11 @@
 .mobileMenu {
   display: none;
   flex-direction: column;
+  min-height: min(28rem, calc(100dvh - var(--header-height)));
+  max-height: calc(100dvh - var(--header-height));
   padding: 1.5rem 0;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   background-color: var(--color-navy-dark);
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   animation: slideDown 0.25s ease-out;
@@ -289,33 +293,39 @@
     height: 4rem;
   }
 
+  .mobileMenu {
+    min-height: min(28rem, calc(100dvh - 4rem));
+    max-height: calc(100dvh - 4rem);
+  }
+
   .logoImg {
     height: var(--logo-height-mobile);
   }
 }
 
-/* GNB Highlight Glow Effect */
-/* GNB Highlight Glow Effect */
-@keyframes pulseGold {
-  0% {
-    box-shadow: 0 4px 10px rgba(255, 191, 0, 0.1);
+@keyframes guidePulse {
+  0%,
+  100% {
+    box-shadow: 0 4px 14px
+      rgb(from var(--color-guide-accent) r g b / 0.12);
   }
   50% {
-    box-shadow: 0 4px 25px rgba(255, 191, 0, 0.4); /* 과하지 않게 줄임 */
-    background-color: rgba(18, 18, 45, 0.95);
-  }
-  100% {
-    box-shadow: 0 4px 10px rgba(255, 191, 0, 0.1);
+    box-shadow: 0 4px 18px
+      rgb(from var(--color-guide-accent) r g b / 0.3);
   }
 }
 
+/* GNB Highlight State */
 .header.glow {
-  animation: pulseGold 2s infinite ease-in-out;
-  border-bottom: none;
+  border-bottom: 1px solid
+    rgb(from var(--color-guide-accent) r g b / 0.35);
+  box-shadow: 0 4px 14px
+    rgb(from var(--color-guide-accent) r g b / 0.12);
+  animation: guidePulse 0.8s ease-in-out 2;
 }
 
-/* 네비게이션 텍스트도 은은하게 밝힘 */
-.glow .navLink {
-  color: #fff;
-  text-shadow: 0 0 15px rgba(255, 191, 0, 0.8);
+@media (prefers-reduced-motion: reduce) {
+  .header.glow {
+    animation: none;
+  }
 }

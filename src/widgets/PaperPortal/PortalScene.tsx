@@ -25,6 +25,7 @@ export function PortalScene() {
     Array(10).fill(false),
   );
   const [isAnimating, setIsAnimating] = useState(false);
+  const [isCharacterHovered, setIsCharacterHovered] = useState(false);
 
   /** 닫힘 시퀀스 진행 중 상태 (PortalCharacter에도 전달) */
   const [isClosing, setIsClosing] = useState(false);
@@ -66,6 +67,7 @@ export function PortalScene() {
     if (isClosingRef.current) return;
     if (isAnimating) return; // 애니메이션 중이면 무시
 
+    setIsCharacterHovered(false);
     setIsAnimating(true);
 
     if (!isExpanded) {
@@ -305,6 +307,8 @@ export function PortalScene() {
             isExpanded={isExpanded}
             isClosing={isClosing}
             onClose={() => executeCloseSequence()}
+            onInitialClick={!hasBeenExpanded ? handleClick : undefined}
+            onHoverChange={setIsCharacterHovered}
           />
         </Suspense>
 
@@ -325,6 +329,15 @@ export function PortalScene() {
 
         <Environment preset="city" />
       </Canvas>
+
+      {!hasBeenExpanded && !isAnimating && (
+        <div
+          className={`${styles.openHint} ${isCharacterHovered ? styles.openHintVisible : ""}`}
+          aria-hidden="true"
+        >
+          {t.portal.openHint}
+        </div>
+      )}
 
       {/* 닫기 버튼 오버레이 (Canvas 밖 HTML 요소로 렌더링) */}
       {isExpanded && !isClosing && (

@@ -21,6 +21,10 @@ export interface CharacterProps {
   dialogueText: string;
   /** 다음 대사/상호작용 핸들러 */
   onNext: () => void;
+  /** 캐릭터 등장 전 클릭 핸들러 */
+  onInitialClick?: () => void;
+  /** 캐릭터 호버 상태 전달 */
+  onHoverChange?: (isHovered: boolean) => void;
   /** 다음 힌트 표시 여부 */
   showNextHint?: boolean;
   /** 다음 힌트 라벨 */
@@ -32,6 +36,8 @@ export function Character({
   groupRef,
   dialogueText,
   onNext,
+  onInitialClick,
+  onHoverChange,
   showNextHint = true,
   nextHintLabel,
 }: CharacterProps) {
@@ -54,10 +60,12 @@ export function Character({
         texture={animationState.texture}
         size={characterSize}
         imageAspect={imageAspect}
+        onHoverChange={onHoverChange}
         onClick={() => {
-          // 등장 완료 전이나 사라지는 중에는 클릭 무시
           if (animationState.hasEmerged && !animationState.isDisappearing) {
             onNext();
+          } else if (!animationState.hasEmerged) {
+            onInitialClick?.();
           }
         }}
       />
