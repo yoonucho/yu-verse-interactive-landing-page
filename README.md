@@ -26,7 +26,7 @@ npm run build
 - **3D Flip Cards**: Projects 섹션의 3D 뒤집기 카드로 프로젝트를 소개.
 - **Interactive Molecule Visualization**: Strengths 섹션에서 구체 클릭 시 해당 카드로 연결되는 3D 시각화.
 - **FSD Architecture**: Feature-Sliced Design 패턴을 적용한 확장성과 유지보수성을 고려한 구조.
-- **Lazy Loading & Performance**: Projects, Footer의 지연 로딩과 WebGL 컨텍스트 최적화.
+- **WebGL Performance & Stability**: Strengths 3D 시각화에서 뷰포트 이탈 시 렌더링을 일시 중지하고, DPR 상한과 Bloom 후처리로 성능과 안정성을 관리.
 - **A11y (Accessibility)**: WAI-ARIA 표준을 준수하는 시맨틱한 웹 접근성.
 
 ## 섹션 구성
@@ -64,7 +64,7 @@ src/
  │    ├── ProjectCard.tsx       # 개별 프로젝트 카드
  │    ├── Strengths.tsx         # 강점 인터랙티브 시각화 섹션
  │    ├── Footer.tsx            # CTA + 소셜 링크 푸터
- │    └── SectionSkeleton.tsx   # 지연 로딩 스켈레톤
+ │    └── SectionSkeleton.tsx   # 섹션 로딩 상태용 스켈레톤
  │
  ├── shared/                    # 공통 재사용 요소
  │    ├── ui/
