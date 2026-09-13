@@ -26,7 +26,7 @@ npm run build
 - **3D Flip Cards**: Projects 섹션의 3D 뒤집기 카드로 프로젝트를 소개.
 - **Interactive Molecule Visualization**: Strengths 섹션에서 구체 클릭 시 해당 카드로 연결되는 3D 시각화.
 - **FSD Architecture**: Feature-Sliced Design 패턴을 적용한 확장성과 유지보수성을 고려한 구조.
-- **WebGL Performance & Stability**: Strengths 3D 시각화의 뷰포트 기반 렌더링 제어와 DPR·후처리 최적화로 GPU 부담과 WebGL 컨텍스트 안정성을 고려.
+- **WebGL Performance & Stability**: Strengths 3D 시각화에서 뷰포트 이탈 시 렌더링을 일시 중지하고, DPR 상한과 Bloom 후처리로 성능과 안정성을 관리.
 - **A11y (Accessibility)**: WAI-ARIA 표준을 준수하는 시맨틱한 웹 접근성.
 
 ## 섹션 구성
